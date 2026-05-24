@@ -6,13 +6,9 @@
     <title>web-smith</title>
     <style>
       :root {
-        --bg1: #0b1020;
-        --bg2: #1b2a6a;
-        --card: rgba(255, 255, 255, 0.08);
-        --text: rgba(255, 255, 255, 0.92);
-        --muted: rgba(255, 255, 255, 0.70);
-        --accent1: #7c3aed;
-        --accent2: #06b6d4;
+        --card: rgba(0, 0, 0, 0.28);
+        --text: rgba(255, 255, 255, 0.94);
+        --muted: rgba(255, 255, 255, 0.76);
       }
 
       * { box-sizing: border-box; }
@@ -25,20 +21,61 @@
         padding: 3rem 1.25rem;
         font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
         color: var(--text);
-        background:
-          radial-gradient(900px 600px at 10% 10%, rgba(124, 58, 237, 0.35), transparent 60%),
-          radial-gradient(900px 600px at 90% 30%, rgba(6, 182, 212, 0.30), transparent 60%),
-          linear-gradient(160deg, var(--bg1), var(--bg2));
+        overflow: hidden;
+        background: #070812;
+      }
+
+      /* Animated rainbow background */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: -40vmax;
+        z-index: -2;
+        background: conic-gradient(
+          from 180deg,
+          #ff004c,
+          #ff7a00,
+          #ffe600,
+          #2bff88,
+          #00d4ff,
+          #5b5bff,
+          #b700ff,
+          #ff004c
+        );
+        animation: spin 16s linear infinite;
+        filter: blur(60px) saturate(160%);
+        opacity: 0.95;
+      }
+
+      /* Slow "liquid" shimmer */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: -30vmax;
+        z-index: -1;
+        background: radial-gradient(closest-side, rgba(255,255,255,0.12), transparent 70%);
+        animation: drift 9s ease-in-out infinite alternate;
+        filter: blur(50px);
+        opacity: 0.55;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      @keyframes drift {
+        0%   { transform: translate(-2%, -1%) scale(1.02); }
+        100% { transform: translate(2%, 1%)  scale(1.06); }
       }
 
       .card {
         width: min(860px, 100%);
         background: var(--card);
-        border: 1px solid rgba(255,255,255,0.16);
+        border: 1px solid rgba(255,255,255,0.22);
         border-radius: 18px;
         padding: 2.25rem;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-        backdrop-filter: blur(10px);
+        box-shadow: 0 22px 80px rgba(0,0,0,0.55);
+        backdrop-filter: blur(14px);
       }
 
       h1 {
@@ -71,7 +108,7 @@
         width: 0.55rem;
         height: 0.55rem;
         border-radius: 999px;
-        background: linear-gradient(135deg, var(--accent1), var(--accent2));
+        background: conic-gradient(#ff004c, #ffe600, #2bff88, #00d4ff, #5b5bff, #b700ff, #ff004c);
       }
 
       p {
@@ -125,7 +162,7 @@
       </p>
 
       <p>
-        <strong>When:</strong> <code>Saturday, 18:00</code><br />
+        <strong>When:</strong> <code>Today, 18:00</code><br />
         <strong>Where:</strong> <code>Jan’s place</code> (exact address via message)
       </p>
 
