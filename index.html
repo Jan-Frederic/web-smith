@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>web-smith</title>
+    <title>Chuck Norris Witze</title>
     <style>
       :root {
-        --card: rgba(0, 0, 0, 0.28);
+        --card: rgba(0, 0, 0, 0.32);
         --text: rgba(255, 255, 255, 0.94);
-        --muted: rgba(255, 255, 255, 0.76);
+        --muted: rgba(255, 255, 255, 0.72);
       }
 
       * { box-sizing: border-box; }
@@ -16,13 +16,10 @@
       body {
         margin: 0;
         min-height: 100vh;
-        display: grid;
-        place-items: start center;
-        padding: 3rem 1.25rem;
+        padding: 2.5rem 1.25rem;
         font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
         color: var(--text);
         overflow-x: hidden;
-        overflow-y: auto;
         background: #070812;
       }
 
@@ -44,11 +41,10 @@
           #ff004c
         );
         animation: spin 16s linear infinite;
-        filter: blur(60px) saturate(160%);
+        filter: blur(60px) saturate(170%);
         opacity: 0.95;
       }
 
-      /* Slow "liquid" shimmer */
       body::after {
         content: "";
         position: fixed;
@@ -61,140 +57,52 @@
         pointer-events: none;
       }
 
-      /* Floating "Würstchen" in the background */
-      .sausages {
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-        pointer-events: none;
-        opacity: 0.55;
-        filter: blur(0.2px);
-      }
-
-      .sausage {
-        position: absolute;
-        width: 160px;
-        height: 56px;
-        border-radius: 999px;
-        background:
-          radial-gradient(30px 18px at 22% 35%, rgba(255,255,255,0.35), transparent 55%),
-          linear-gradient(135deg, #ffb27a, #ff7a7a 45%, #ffb27a);
-        box-shadow:
-          inset 0 0 0 2px rgba(0,0,0,0.15),
-          0 18px 50px rgba(0,0,0,0.25);
-        transform: rotate(var(--r, 0deg));
-        animation: floaty var(--d, 12s) ease-in-out infinite;
-      }
-
-      .sausage::before,
-      .sausage::after {
-        content: "";
-        position: absolute;
-        top: 6px;
-        bottom: 6px;
-        width: 18px;
-        border-radius: 999px;
-        background: rgba(255,255,255,0.12);
-        filter: blur(0.2px);
-      }
-      .sausage::before { left: -6px; }
-      .sausage::after { right: -6px; }
-
-      .sausage .grill {
-        position: absolute;
-        inset: 8px 14px;
-        border-radius: 999px;
-        background:
-          repeating-linear-gradient(
-            90deg,
-            rgba(0,0,0,0.26) 0 6px,
-            rgba(0,0,0,0.06) 6px 12px
-          );
-        mix-blend-mode: multiply;
-        opacity: 0.55;
-      }
-
-      @keyframes floaty {
-        0%   { transform: translateY(0px) translateX(0px) rotate(var(--r, 0deg)); }
-        50%  { transform: translateY(-18px) translateX(10px) rotate(calc(var(--r, 0deg) + 2deg)); }
-        100% { transform: translateY(0px) translateX(0px) rotate(var(--r, 0deg)); }
-      }
-
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
-
+      @keyframes spin { to { transform: rotate(360deg); } }
       @keyframes drift {
         0%   { transform: translate(-2%, -1%) scale(1.02); }
         100% { transform: translate(2%, 1%)  scale(1.06); }
       }
 
+      .wrap {
+        width: min(920px, 100%);
+        margin: 0 auto;
+        display: grid;
+        gap: 1.25rem;
+      }
+
       .card {
-        width: min(860px, 100%);
         background: var(--card);
         border: 1px solid rgba(255,255,255,0.22);
         border-radius: 18px;
-        padding: 2.25rem;
+        padding: 1.75rem;
         box-shadow: 0 22px 80px rgba(0,0,0,0.55);
         backdrop-filter: blur(14px);
-        margin: 0 auto;
       }
 
-      .section {
-        margin-top: 1.5rem;
-        padding-top: 1.25rem;
-        border-top: 1px solid rgba(255,255,255,0.14);
+      h1 {
+        margin: 0 0 0.25rem 0;
+        font-size: clamp(2rem, 4vw, 3rem);
+        letter-spacing: -0.03em;
       }
 
-      .t3 {
-        display: grid;
-        gap: 0.9rem;
-        grid-template-columns: 1fr;
-      }
+      p { margin: 0.4rem 0 0; color: var(--muted); line-height: 1.55; }
 
-      .board {
-        width: min(360px, 100%);
-        aspect-ratio: 1 / 1;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        padding: 10px;
+      .joke {
+        margin-top: 1.25rem;
+        padding: 1.25rem;
         border-radius: 16px;
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.14);
-      }
-
-      .cell {
-        display: grid;
-        place-items: center;
-        font-size: clamp(2.2rem, 6vw, 3.2rem);
-        font-weight: 750;
-        border-radius: 14px;
-        cursor: pointer;
-        user-select: none;
-        background: rgba(0,0,0,0.28);
-        border: 1px solid rgba(255,255,255,0.14);
-        transition: transform 0.08s ease, background 0.2s ease, border-color 0.2s ease;
-      }
-      .cell:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.28); }
-      .cell:active { transform: translateY(0px) scale(0.99); }
-
-      .cell.x { color: rgba(255,255,255,0.92); }
-      .cell.o {
         background: rgba(255,255,255,0.08);
-        color: rgba(255,255,255,0.92);
+        border: 1px solid rgba(255,255,255,0.16);
+        font-size: 1.15rem;
+        line-height: 1.55;
       }
 
-      .status {
-        color: var(--muted);
-        font-size: 1rem;
-      }
-
-      .controls {
+      .row {
         display: flex;
-        gap: 0.6rem;
+        gap: 0.7rem;
         flex-wrap: wrap;
         align-items: center;
+        margin-top: 1rem;
       }
 
       button {
@@ -202,52 +110,13 @@
         border: 1px solid rgba(255,255,255,0.18);
         background: rgba(255,255,255,0.08);
         color: rgba(255,255,255,0.92);
-        padding: 0.55rem 0.8rem;
+        padding: 0.65rem 0.9rem;
         border-radius: 12px;
         cursor: pointer;
+        font-weight: 650;
       }
-      button:hover { border-color: rgba(255,255,255,0.32); }
+      button:hover { border-color: rgba(255,255,255,0.35); }
       button:active { transform: translateY(1px); }
-
-      h1 {
-        margin: 0 0 0.75rem 0;
-        font-size: clamp(2rem, 4vw, 3rem);
-        line-height: 1.05;
-        letter-spacing: -0.03em;
-      }
-
-      .badge-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin: 1rem 0 1.5rem;
-      }
-
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        padding: 0.35rem 0.6rem;
-        border-radius: 999px;
-        font-size: 0.9rem;
-        color: var(--text);
-        background: rgba(255,255,255,0.10);
-        border: 1px solid rgba(255,255,255,0.16);
-      }
-
-      .dot {
-        width: 0.55rem;
-        height: 0.55rem;
-        border-radius: 999px;
-        background: conic-gradient(#ff004c, #ffe600, #2bff88, #00d4ff, #5b5bff, #b700ff, #ff004c);
-      }
-
-      p {
-        margin: 0.75rem 0 0;
-        color: var(--muted);
-        font-size: 1.05rem;
-        line-height: 1.6;
-      }
 
       code {
         background: rgba(0,0,0,0.25);
@@ -264,149 +133,55 @@
       }
       a:hover { border-bottom-color: rgba(255,255,255,0.7); }
 
-      .footer {
-        margin-top: 1.75rem;
-        display: flex;
-        justify-content: space-between;
-        gap: 1rem;
-        flex-wrap: wrap;
-        font-size: 0.95rem;
-        color: rgba(255,255,255,0.6);
-      }
-
-      strong { color: rgba(255,255,255,0.92); font-weight: 650; }
+      .small { font-size: 0.95rem; color: rgba(255,255,255,0.62); }
     </style>
   </head>
   <body>
-    <div class="sausages" aria-hidden="true">
-      <div class="sausage" style="left:6%; top:12%; --r:-18deg; --d:13s;"><span class="grill"></span></div>
-      <div class="sausage" style="left:72%; top:18%; --r:12deg; --d:11s;"><span class="grill"></span></div>
-      <div class="sausage" style="left:18%; top:64%; --r:22deg; --d:15s;"><span class="grill"></span></div>
-      <div class="sausage" style="left:76%; top:70%; --r:-10deg; --d:14s;"><span class="grill"></span></div>
-      <div class="sausage" style="left:44%; top:84%; --r:8deg; --d:16s;"><span class="grill"></span></div>
+    <div class="wrap">
+      <header class="card">
+        <h1>Chuck Norris Witze</h1>
+        <p>
+          Frisch gezapft von <code>https://api.chucknorris.io/jokes/random</code>.
+          Klick auf „Neuer Witz“ für den nächsten.
+        </p>
+
+        <div class="joke" id="joke">Lade Witz…</div>
+
+        <div class="row">
+          <button id="btn" type="button">Neuer Witz</button>
+          <span class="small">Tipp: Seite ist scrollable. 😉</span>
+        </div>
+      </header>
+
+      <section class="card">
+        <p class="small">
+          Quelle: <a href="https://api.chucknorris.io/" target="_blank" rel="noreferrer">api.chucknorris.io</a>
+        </p>
+      </section>
     </div>
 
-    <main class="card">
-      <h1>🔥 Barbecue Invitation</h1>
+    <script>
+      const jokeEl = document.getElementById('joke');
+      const btn = document.getElementById('btn');
 
-      <div class="badge-row">
-        <span class="badge"><span class="dot"></span> Good vibes</span>
-        <span class="badge"><span class="dot"></span> Cold drinks</span>
-        <span class="badge"><span class="dot"></span> Hot grill</span>
-      </div>
+      async function loadJoke() {
+        btn.disabled = true;
+        btn.textContent = 'Lade…';
+        try {
+          const res = await fetch('https://api.chucknorris.io/jokes/random', { cache: 'no-store' });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const data = await res.json();
+          jokeEl.textContent = data.value || 'Kein Witz gefunden.';
+        } catch (e) {
+          jokeEl.textContent = 'Konnte keinen Witz laden: ' + e.message;
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Neuer Witz';
+        }
+      }
 
-      <p>
-        You’re invited to a laid‑back BBQ. Come hungry, bring your favorite people,
-        and stay as long as you like.
-      </p>
-
-      <p>
-        <strong>When:</strong> <code>Today, 18:00</code><br />
-        <strong>Where:</strong> <code>Jan’s place</code> (exact address via message)
-      </p>
-
-      <p>
-        <strong>What to bring (optional):</strong> something for the grill, a salad, or a dessert.
-        We’ll have the basics covered.
-      </p>
-
-      <div class="section t3">
-        <h2 style="margin:0; font-size:1.35rem; letter-spacing:-0.02em;">Tic‑Tac‑Toe</h2>
-        <div class="status" id="status">Your move: <code>X</code></div>
-
-        <div class="board" id="board" aria-label="Tic tac toe board">
-          <div class="cell" data-i="0" role="button" aria-label="cell 1"></div>
-          <div class="cell" data-i="1" role="button" aria-label="cell 2"></div>
-          <div class="cell" data-i="2" role="button" aria-label="cell 3"></div>
-          <div class="cell" data-i="3" role="button" aria-label="cell 4"></div>
-          <div class="cell" data-i="4" role="button" aria-label="cell 5"></div>
-          <div class="cell" data-i="5" role="button" aria-label="cell 6"></div>
-          <div class="cell" data-i="6" role="button" aria-label="cell 7"></div>
-          <div class="cell" data-i="7" role="button" aria-label="cell 8"></div>
-          <div class="cell" data-i="8" role="button" aria-label="cell 9"></div>
-        </div>
-
-        <div class="controls">
-          <button id="resetBtn" type="button">Reset</button>
-          <span class="status">(Two players on one device)</span>
-        </div>
-      </div>
-
-      <div class="footer section">
-        <span>RSVP: just reply with <code>yes</code> / <code>maybe</code> / <code>can’t</code>.</span>
-        <span><a href="https://github.com/Jan-Frederic/web-smith">Edit this invite</a></span>
-      </div>
-
-      <script>
-        (function () {
-          const boardEl = document.getElementById('board');
-          const cells = Array.from(boardEl.querySelectorAll('.cell'));
-          const statusEl = document.getElementById('status');
-          const resetBtn = document.getElementById('resetBtn');
-
-          let board = Array(9).fill('');
-          let player = 'X';
-          let done = false;
-
-          const wins = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8],
-            [0, 3, 6], [1, 4, 7], [2, 5, 8],
-            [0, 4, 8], [2, 4, 6],
-          ];
-
-          function render() {
-            cells.forEach((c, i) => {
-              c.textContent = board[i];
-              c.classList.toggle('x', board[i] === 'X');
-              c.classList.toggle('o', board[i] === 'O');
-            });
-
-            const w = winner();
-            if (w) {
-              done = true;
-              statusEl.innerHTML = `Winner: <code>${w}</code> 🎉`;
-              return;
-            }
-
-            if (board.every(Boolean)) {
-              done = true;
-              statusEl.innerHTML = `It’s a draw. <code>Reset</code> to play again.`;
-              return;
-            }
-
-            statusEl.innerHTML = `Your move: <code>${player}</code>`;
-          }
-
-          function winner() {
-            for (const [a, b, c] of wins) {
-              if (board[a] && board[a] === board[b] && board[a] === board[c]) return board[a];
-            }
-            return '';
-          }
-
-          function move(i) {
-            if (done) return;
-            if (board[i]) return;
-            board[i] = player;
-            player = player === 'X' ? 'O' : 'X';
-            render();
-          }
-
-          function reset() {
-            board = Array(9).fill('');
-            player = 'X';
-            done = false;
-            render();
-          }
-
-          cells.forEach((cell) => {
-            cell.addEventListener('click', () => move(Number(cell.dataset.i)));
-          });
-          resetBtn.addEventListener('click', reset);
-
-          render();
-        })();
-      </script>
-    </main>
+      btn.addEventListener('click', loadJoke);
+      loadJoke();
+    </script>
   </body>
 </html>
