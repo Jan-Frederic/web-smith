@@ -5,14 +5,127 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>web-smith</title>
     <style>
-      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 4rem; }
-      h1 { margin: 0 0 0.5rem 0; }
-      p { color: #444; }
-      code { background: #f3f3f3; padding: 0.15rem 0.35rem; border-radius: 6px; }
+      :root {
+        --bg1: #0b1020;
+        --bg2: #1b2a6a;
+        --card: rgba(255, 255, 255, 0.08);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.70);
+        --accent1: #7c3aed;
+        --accent2: #06b6d4;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 3rem 1.25rem;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(900px 600px at 10% 10%, rgba(124, 58, 237, 0.35), transparent 60%),
+          radial-gradient(900px 600px at 90% 30%, rgba(6, 182, 212, 0.30), transparent 60%),
+          linear-gradient(160deg, var(--bg1), var(--bg2));
+      }
+
+      .card {
+        width: min(860px, 100%);
+        background: var(--card);
+        border: 1px solid rgba(255,255,255,0.16);
+        border-radius: 18px;
+        padding: 2.25rem;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+        backdrop-filter: blur(10px);
+      }
+
+      h1 {
+        margin: 0 0 0.75rem 0;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+      }
+
+      .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 1rem 0 1.5rem;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.35rem 0.6rem;
+        border-radius: 999px;
+        font-size: 0.9rem;
+        color: var(--text);
+        background: rgba(255,255,255,0.10);
+        border: 1px solid rgba(255,255,255,0.16);
+      }
+
+      .dot {
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      }
+
+      p {
+        margin: 0.75rem 0 0;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.6;
+      }
+
+      code {
+        background: rgba(0,0,0,0.25);
+        padding: 0.15rem 0.4rem;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.12);
+        color: rgba(255,255,255,0.92);
+      }
+
+      a {
+        color: rgba(255,255,255,0.92);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255,255,255,0.35);
+      }
+      a:hover { border-bottom-color: rgba(255,255,255,0.7); }
+
+      .footer {
+        margin-top: 1.75rem;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        font-size: 0.95rem;
+        color: rgba(255,255,255,0.6);
+      }
     </style>
   </head>
   <body>
-    <h1>Hello world</h1>
-    <p>This site is deployed via <code>GitHub Pages</code> from the <code>main</code> branch.</p>
+    <main class="card">
+      <h1>Hello world, but prettier.</h1>
+
+      <div class="badge-row">
+        <span class="badge"><span class="dot"></span> GitHub Pages</span>
+        <span class="badge"><span class="dot"></span> Branch: <code>main</code></span>
+        <span class="badge"><span class="dot"></span> Repo: <code>web-smith</code></span>
+      </div>
+
+      <p>
+        This is a tiny static site. No backend, no build step — just an <code>index.html</code>
+        deployed via the Pages workflow.
+      </p>
+
+      <div class="footer">
+        <span>Made with a few gradients and good intentions.</span>
+        <span><a href="https://github.com/Jan-Frederic/web-smith">View source</a></span>
+      </div>
+    </main>
   </body>
 </html>
