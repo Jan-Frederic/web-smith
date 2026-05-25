@@ -1,364 +1,404 @@
 <!doctype html>
 <html lang="de">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Blickfeld Nord — Band Homepage</title>
-    <style>
-      :root {
-        --paper: #fff7d6;
-        --ink: #111;
-        --neon1: #ff006e;
-        --neon2: #00d4ff;
-        --neon3: #7cff00;
-        --neon4: #ffd400;
-        --shadow: rgba(0,0,0,0.22);
-      }
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Blickfeld Nord</title>
+  <meta name="description" content="Blickfeld Nord — Band. Live. Direkt. Cool." />
 
-      * { box-sizing: border-box; }
+  <style>
+    :root{
+      --bg0:#05060a;
+      --bg1:#070a12;
+      --ink:#eaf0ff;
+      --muted:rgba(234,240,255,.72);
+      --glass:rgba(255,255,255,.06);
+      --glass2:rgba(255,255,255,.10);
+      --stroke:rgba(255,255,255,.14);
+      --shadow:rgba(0,0,0,.55);
+      --a:#7c3aed;  /* purple */
+      --b:#06b6d4;  /* cyan */
+      --c:#22c55e;  /* green */
+      --d:#f97316;  /* orange */
+      --e:#f43f5e;  /* rose */
+      --radius: 22px;
+    }
 
-      html, body { height: 100%; }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--ink);
+      background: radial-gradient(1200px 700px at 20% 10%, rgba(124,58,237,.25), transparent 55%),
+                  radial-gradient(900px 600px at 78% 22%, rgba(6,182,212,.20), transparent 55%),
+                  radial-gradient(900px 650px at 55% 85%, rgba(244,63,94,.14), transparent 60%),
+                  linear-gradient(180deg, var(--bg0), var(--bg1));
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      overflow-x:hidden;
+    }
 
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-        color: var(--ink);
-        background: var(--paper);
-        overflow-x: hidden;
-      }
+    /* subtle animated grain + gradient drift */
+    .fx{
+      position:fixed;
+      inset:-2px;
+      pointer-events:none;
+      z-index:-1;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(34,197,94,.10), transparent 55%),
+        radial-gradient(circle at 90% 30%, rgba(249,115,22,.10), transparent 55%),
+        radial-gradient(circle at 50% 90%, rgba(124,58,237,.10), transparent 55%);
+      filter:saturate(125%) contrast(110%);
+      animation: drift 18s ease-in-out infinite;
+      opacity:.9;
+    }
+    @keyframes drift{
+      0%,100%{ transform: translate3d(0,0,0) scale(1); }
+      50%{ transform: translate3d(-1.5%,1.2%,0) scale(1.02); }
+    }
 
-      /* Comic halftone + moving rainbow wash */
-      .bg {
-        position: fixed;
-        inset: -20vmax;
-        z-index: -3;
-        background:
-          conic-gradient(from 90deg, #ff006e, #8338ec, #3a86ff, #00f5d4, #7cff00, #ffd400, #ff006e);
-        filter: saturate(170%) contrast(115%);
-        animation: spin 18s linear infinite;
-        opacity: 0.55;
-      }
+    .grain{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+      opacity:.10;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
 
-      .halftone {
-        position: fixed;
-        inset: 0;
-        z-index: -2;
-        background:
-          radial-gradient(circle at 25% 15%, rgba(0,0,0,0.10) 0 2px, transparent 2px 8px),
-          radial-gradient(circle at 75% 45%, rgba(0,0,0,0.08) 0 2px, transparent 2px 9px),
-          radial-gradient(circle at 35% 80%, rgba(0,0,0,0.09) 0 2px, transparent 2px 10px);
-        background-size: 22px 22px, 26px 26px, 28px 28px;
-        mix-blend-mode: multiply;
-        opacity: 0.38;
-      }
+    a{ color:inherit; text-decoration:none; }
 
-      .noise {
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-        pointer-events: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
-        opacity: 0.25;
-        mix-blend-mode: multiply;
-      }
+    .wrap{
+      width:min(1100px, 100%);
+      margin:0 auto;
+      padding: 26px 18px 70px;
+      display:grid;
+      gap: 18px;
+    }
 
-      @keyframes spin { to { transform: rotate(360deg); } }
+    header{
+      position:sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(5,6,10,.78), rgba(5,6,10,.35));
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .nav{
+      width:min(1100px, 100%);
+      margin:0 auto;
+      padding: 14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+    }
 
-      .wrap {
-        width: min(980px, 100%);
-        margin: 0 auto;
-        padding: 2.5rem 1.25rem 4rem;
-        display: grid;
-        gap: 1.25rem;
-      }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 220px;
+    }
 
-      .panel {
-        background: rgba(255,255,255,0.92);
-        border: 3px solid #000;
-        border-radius: 18px;
-        box-shadow:
-          0 18px 0 rgba(0,0,0,0.18),
-          0 36px 70px rgba(0,0,0,0.18);
-        padding: 1.4rem 1.4rem;
-        position: relative;
-        overflow: hidden;
-      }
+    .logo{
+      width:40px; height:40px;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(234,240,255,.35), transparent 55%),
+        conic-gradient(from 210deg, var(--a), var(--b), var(--c), var(--d), var(--e), var(--a));
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.18);
+    }
 
-      .panel::before {
-        content: "";
-        position: absolute;
-        inset: -40px;
-        background:
-          repeating-linear-gradient(135deg,
-            rgba(0,0,0,0.04) 0 8px,
-            rgba(0,0,0,0.00) 8px 16px);
-        opacity: 0.8;
-        pointer-events: none;
-      }
+    .brand h1{
+      margin:0;
+      font-size: 1.03rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .brand small{
+      display:block;
+      margin-top:2px;
+      color: var(--muted);
+      letter-spacing:.04em;
+      font-weight: 600;
+    }
 
-      .title {
-        margin: 0;
-        font-size: clamp(2.1rem, 4.6vw, 3.6rem);
-        letter-spacing: -0.04em;
-        line-height: 1.0;
-        text-transform: uppercase;
-        text-shadow:
-          3px 3px 0 #000,
-          6px 6px 0 rgba(0,0,0,0.15);
-        background: linear-gradient(90deg, var(--neon1), var(--neon2), var(--neon3), var(--neon4));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        filter: drop-shadow(0 10px 0 rgba(0,0,0,0.12));
-      }
+    .navlinks{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+    }
 
-      .subtitle {
-        margin: 0.8rem 0 0;
-        font-size: 1.05rem;
-        line-height: 1.55;
-        color: rgba(0,0,0,0.78);
-      }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: rgba(234,240,255,.92);
+      font-weight: 750;
+      letter-spacing:.01em;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+    }
+    .pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.22); }
 
-      .speech {
-        display: inline-block;
-        margin-top: 1.2rem;
-        padding: 0.9rem 1.05rem;
-        border: 3px solid #000;
-        background: #fff;
-        border-radius: 26px;
-        position: relative;
-        font-weight: 700;
-      }
+    .hero{
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(900px 500px at 15% 30%, rgba(124,58,237,.24), transparent 60%),
+        radial-gradient(900px 520px at 85% 40%, rgba(6,182,212,.18), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      box-shadow: 0 40px 90px rgba(0,0,0,.35);
+      overflow:hidden;
+      position:relative;
+      padding: 34px;
+    }
 
-      .speech::after {
-        content: "";
-        position: absolute;
-        left: 22px;
-        bottom: -16px;
-        width: 0;
-        height: 0;
-        border: 16px solid transparent;
-        border-top-color: #000;
-        transform: rotate(18deg);
-      }
-      .speech::before {
-        content: "";
-        position: absolute;
-        left: 24px;
-        bottom: -12px;
-        width: 0;
-        height: 0;
-        border: 14px solid transparent;
-        border-top-color: #fff;
-        transform: rotate(18deg);
-        z-index: 1;
-      }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        conic-gradient(from 200deg, rgba(124,58,237,.0), rgba(124,58,237,.18), rgba(6,182,212,.0), rgba(34,197,94,.12), rgba(249,115,22,.0), rgba(244,63,94,.14), rgba(124,58,237,.0));
+      filter: blur(18px);
+      opacity:.55;
+      animation: spin 22s linear infinite;
+      z-index:0;
+    }
+    @keyframes spin{ to{ transform: rotate(360deg); } }
 
-      .grid {
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 1rem;
-      }
+    .hero > *{ position:relative; z-index:1; }
 
-      @media (max-width: 820px) {
-        .grid { grid-template-columns: 1fr; }
-      }
+    .kicker{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.25);
+      color: rgba(234,240,255,.92);
+      font-weight: 800;
+      letter-spacing:.06em;
+      text-transform: uppercase;
+      width: fit-content;
+    }
 
-      .sticker {
-        border: 3px solid #000;
-        border-radius: 16px;
-        padding: 1rem;
-        background: linear-gradient(135deg, rgba(255,0,110,0.18), rgba(0,212,255,0.18));
-      }
+    .headline{
+      margin: 14px 0 0;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
 
-      .sticker h2 {
-        margin: 0;
-        font-size: 1.05rem;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-      }
+    .headline .grad{
+      background: linear-gradient(90deg, rgba(234,240,255,1), rgba(234,240,255,.85), rgba(6,182,212,1));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
 
-      .btns {
-        margin-top: 0.9rem;
-        display: flex;
-        gap: 0.7rem;
-        flex-wrap: wrap;
-        align-items: center;
-      }
+    .sub{
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 70ch;
+    }
 
-      button {
-        appearance: none;
-        border: 3px solid #000;
-        background: #fff;
-        padding: 0.65rem 0.9rem;
-        border-radius: 14px;
-        font-weight: 800;
-        cursor: pointer;
-        box-shadow: 0 8px 0 rgba(0,0,0,0.18);
-        transform: translateY(0);
-        transition: transform 0.08s ease;
-      }
+    .cta{
+      margin-top: 18px;
+      display:flex;
+      gap: 12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
 
-      button:hover { transform: translateY(-1px); }
-      button:active { transform: translateY(6px); box-shadow: 0 2px 0 rgba(0,0,0,0.22); }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 18px 40px rgba(0,0,0,.25);
+      font-weight: 850;
+      letter-spacing:.01em;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.24); }
 
-      .boom {
-        display: inline-block;
-        padding: 0.5rem 0.7rem;
-        border: 3px solid #000;
-        border-radius: 14px;
-        background: #ffd400;
-        font-weight: 900;
-        text-transform: uppercase;
-        transform: rotate(-3deg);
-        animation: wobble 1.6s ease-in-out infinite;
-      }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(124,58,237,.35), rgba(6,182,212,.22));
+      border-color: rgba(6,182,212,.30);
+    }
 
-      @keyframes wobble {
-        0%,100% { transform: rotate(-3deg) translateY(0); }
-        50% { transform: rotate(3deg) translateY(-2px); }
-      }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      align-items:stretch;
+    }
+    @media (max-width: 920px){ .grid{ grid-template-columns: 1fr; } }
 
-      /* Confetti */
-      .confetti {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        opacity: 0.85;
-      }
-      .confetti i {
-        position: absolute;
-        width: 10px;
-        height: 18px;
-        border: 3px solid #000;
-        border-radius: 6px;
-        background: var(--c, #ff006e);
-        transform: rotate(var(--r, 0deg));
-        animation: fall var(--t, 6s) linear infinite;
-        top: -30px;
-        left: var(--x, 50%);
-      }
-      @keyframes fall {
-        to { transform: translateY(120vh) rotate(calc(var(--r, 0deg) + 360deg)); }
-      }
+    .card{
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.025));
+      box-shadow: 0 26px 60px rgba(0,0,0,.28);
+      padding: 22px;
+    }
 
-      .footer {
-        text-align: center;
-        color: rgba(0,0,0,0.65);
-        font-weight: 650;
-        padding: 0.2rem 0;
-      }
+    .card h2{
+      margin:0;
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing:.10em;
+    }
 
-      a { color: inherit; }
-      code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
-    </style>
-  </head>
-  <body>
-    <div class="bg" aria-hidden="true"></div>
-    <div class="halftone" aria-hidden="true"></div>
-    <div class="noise" aria-hidden="true"></div>
+    .card p{ margin: 12px 0 0; color: var(--muted); line-height: 1.7; }
 
-    <div class="wrap">
-      <section class="panel" id="top">
-        <div class="confetti" aria-hidden="true" id="confetti"></div>
+    .tagrow{ margin-top: 14px; display:flex; flex-wrap:wrap; gap:8px; }
+    .tag{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: rgba(234,240,255,.9);
+      font-weight: 800;
+      letter-spacing:.02em;
+      font-size: .92rem;
+    }
 
-        <h1 class="title">Blickfeld&nbsp;Nord</h1>
-        <p class="subtitle">
-          Willkommen bei <strong>Blickfeld Nord</strong> — laut, ehrlich, live.
-          Und ja: Die Band ist <span class="boom">COOL</span>.
+    .biglink{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+    }
+    .biglink span{ color: var(--muted); font-weight: 750; }
+    .arrow{ opacity:.9; }
+
+    footer{
+      margin-top: 10px;
+      text-align:center;
+      color: rgba(234,240,255,.55);
+      font-weight: 650;
+    }
+
+    .note{
+      font-size: .95rem;
+      color: rgba(234,240,255,.62);
+    }
+
+    /* reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .fx, .hero::before{ animation:none !important; }
+      .pill, .btn{ transition:none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="fx" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header>
+    <nav class="nav">
+      <a class="brand" href="#top" aria-label="Blickfeld Nord">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Blickfeld Nord</h1>
+          <small>Band · Live · Direkt</small>
+        </div>
+      </a>
+
+      <div class="navlinks">
+        <a class="pill" href="#about">Über uns</a>
+        <a class="pill" href="#links">Links</a>
+        <a class="pill" href="#kontakt">Kontakt</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="wrap" id="top">
+    <section class="hero">
+      <div class="kicker">Nordwind im Verstärker</div>
+      <h2 class="headline"><span class="grad">Blickfeld Nord</span></h2>
+      <p class="sub">
+        Eine Band mit Kante, Herz und ordentlich Schub nach vorne. <strong>Ja — Blickfeld Nord ist cool.</strong>
+        Wenn’s live knallt und der Refrain klebt, seid ihr hier richtig.
+      </p>
+
+      <div class="cta">
+        <a class="btn primary" href="https://www.instagram.com/blickfeldnord?igsh=emtkdTJrc25wc29h" target="_blank" rel="noopener noreferrer">Instagram öffnen</a>
+        <a class="btn" href="#about">Mehr erfahren</a>
+      </div>
+      <p class="note" style="margin:14px 0 0;">@blickfeldnord</p>
+    </section>
+
+    <section class="grid">
+      <section class="card" id="about">
+        <h2>Über Blickfeld Nord</h2>
+        <p>
+          Blickfeld Nord steht für Songs, die nicht geschniegelt sein müssen, um zu wirken:
+          energiegeladen, direkt und mit einer Portion „lass raus“.
+          Das ist Musik für Leute, die lieber vorne an der Bühne stehen als hinten am Tresen.
         </p>
-        <div class="speech">👋 Grüße an Lukas &amp; Kai — schön, dass ihr da seid.</div>
+        <div class="tagrow" aria-label="Tags">
+          <span class="tag">Live‑Energie</span>
+          <span class="tag">Hook‑Faktor</span>
+          <span class="tag">Nord‑Vibe</span>
+          <span class="tag">100% cool</span>
+        </div>
       </section>
 
-      <section class="panel">
-        <div class="grid">
+      <aside class="card" id="links">
+        <h2>Links</h2>
+        <p>
+          Der schnellste Weg zu News, Clips und Gigs:
+        </p>
+        <a class="biglink" href="https://www.instagram.com/blickfeldnord?igsh=emtkdTJrc25wc29h" target="_blank" rel="noopener noreferrer">
           <div>
-            <h2 style="margin:0; font-size:1.35rem; text-transform:uppercase; letter-spacing:0.05em;">Über die Band</h2>
-            <p class="subtitle" style="margin-top:0.65rem;">
-              <strong>Blickfeld Nord</strong> liefert Songs mit Druck, Hook und Haltung — perfekt für alle,
-              die live lieber schwitzen als sitzen. Kurz gesagt: Diese Band ist cool.
-            </p>
-
-            <div class="btns">
-              <a id="igLink" href="https://www.instagram.com/blickfeldnord?igsh=emtkdTJrc25wc29h" target="_blank" rel="noopener noreferrer"><button type="button">Instagram</button></a>
-              <button id="more" type="button">Mehr Konfetti</button>
-            </div>
-
-            <p class="subtitle" style="margin-top:0.75rem;">
-              Hinweis: Ich konnte Facebook/Instagram ohne Browser nicht zuverlässig „selbst“ finden.
-              Wenn du mir die exakten Links gibst, setze ich sie sofort korrekt ein.
-            </p>
+            <strong>Instagram</strong><br />
+            <span>@blickfeldnord</span>
           </div>
+          <div class="arrow">→</div>
+        </a>
+        <p class="note">(Weitere Links können jederzeit rein — sag einfach an.)</p>
+      </aside>
+    </section>
 
-          <aside class="sticker">
-            <h2>Quick‑Links</h2>
-            <p class="subtitle" style="margin-top:0.6rem;">
-              <strong>Instagram:</strong> @blickfeldnord<br />
-              <strong>Vibe:</strong> Nord‑Energie
-            </p>
-          </aside>
-        </div>
-      </section>
+    <section class="card" id="kontakt">
+      <h2>Kontakt</h2>
+      <p>
+        Booking/Anfragen: Schreib uns am einfachsten via Instagram DM.
+      </p>
+    </section>
 
-      <section class="panel">
-        <h2 style="margin:0; font-size:1.35rem; text-transform:uppercase; letter-spacing:0.05em;">Scroll‑Zone</h2>
-        <p class="subtitle" style="margin-top:0.65rem;">
-          Wenn du bis hierher gekommen bist: Respekt. Jetzt kommt nur noch mehr Quatsch.
-        </p>
-        <div style="height: 420px; margin-top: 1rem; border: 3px dashed #000; border-radius: 16px; background: rgba(255,255,255,0.6); display:grid; place-items:center; font-weight:900;">
-          <div style="text-align:center;">
-            <div style="font-size:2rem;">⬇️</div>
-            <div>SCROLL WEITER</div>
-            <div style="font-size:2rem;">⬇️</div>
-          </div>
-        </div>
-      </section>
+    <footer>
+      © <span id="y"></span> Blickfeld Nord · Made by Mr. Smith 😎
+    </footer>
+  </main>
 
-      <section class="footer">
-        Made for Lukas &amp; Kai. <a href="#top">Zurück nach oben</a>
-      </section>
-    </div>
-
-    <script>
-      // Confetti generator
-      const confetti = document.getElementById('confetti');
-
-      function addConfetti(n = 22) {
-        for (let i = 0; i < n; i++) {
-          const p = document.createElement('i');
-          const colors = ['#ff006e', '#00d4ff', '#7cff00', '#ffd400', '#8338ec', '#ff7a00'];
-          p.style.setProperty('--c', colors[Math.floor(Math.random() * colors.length)]);
-          p.style.setProperty('--x', Math.floor(Math.random() * 100) + '%');
-          p.style.setProperty('--r', (Math.random() * 90 - 45).toFixed(1) + 'deg');
-          p.style.setProperty('--t', (Math.random() * 2.8 + 3.5).toFixed(2) + 's');
-          p.style.opacity = (Math.random() * 0.55 + 0.35).toFixed(2);
-          p.style.width = (Math.random() * 10 + 8).toFixed(0) + 'px';
-          p.style.height = (Math.random() * 18 + 10).toFixed(0) + 'px';
-          confetti.appendChild(p);
-          // cleanup
-          setTimeout(() => p.remove(), 9000);
-        }
-      }
-
-      addConfetti(28);
-      setInterval(() => addConfetti(6), 1800);
-
-      // Buttons
-      const moreBtn = document.getElementById('more');
-      moreBtn.addEventListener('click', () => addConfetti(60));
-
-      // Inject keyframes for shake
-      const s = document.createElement('style');
-      s.textContent = `
-        @keyframes shake {
-          0%{ transform: translate(0,0) rotate(0deg); }
-          25%{ transform: translate(1px,-1px) rotate(-0.2deg); }
-          50%{ transform: translate(-1px,1px) rotate(0.25deg); }
-          75%{ transform: translate(1px,1px) rotate(-0.15deg); }
-          100%{ transform: translate(0,0) rotate(0deg); }
-        }
-      `;
-      document.head.appendChild(s);
-    </script>
-  </body>
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
 </html>
