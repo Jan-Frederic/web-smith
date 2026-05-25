@@ -4,25 +4,27 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="dark" />
-  <title>Blickfeld Nord</title>
-  <meta name="description" content="Blickfeld Nord — Band. Live. Direkt. Cool." />
+  <title>Top 10 AI Themen</title>
+  <meta name="description" content="Top 10 aktuelle AI Themen (ohne Webzugriff) — kurz erklärt." />
 
   <style>
     :root{
-      --bg0:#05060a;
-      --bg1:#070a12;
+      --bg0:#06070b;
+      --bg1:#0a0c14;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.10);
+      --stroke: rgba(255,255,255,.14);
       --ink:#eaf0ff;
-      --muted:rgba(234,240,255,.72);
-      --glass:rgba(255,255,255,.06);
-      --glass2:rgba(255,255,255,.10);
-      --stroke:rgba(255,255,255,.14);
-      --shadow:rgba(0,0,0,.55);
-      --a:#7c3aed;  /* purple */
-      --b:#06b6d4;  /* cyan */
-      --c:#22c55e;  /* green */
-      --d:#f97316;  /* orange */
-      --e:#f43f5e;  /* rose */
-      --radius: 22px;
+      --muted: rgba(234,240,255,.72);
+      --shadow: rgba(0,0,0,.55);
+
+      --a:#7c3aed; /* purple */
+      --b:#06b6d4; /* cyan */
+      --c:#22c55e; /* green */
+      --d:#f97316; /* orange */
+      --e:#f43f5e; /* rose */
+
+      --r: 22px;
     }
 
     *{ box-sizing:border-box; }
@@ -30,15 +32,17 @@
     body{
       margin:0;
       color:var(--ink);
-      background: radial-gradient(1200px 700px at 20% 10%, rgba(124,58,237,.25), transparent 55%),
-                  radial-gradient(900px 600px at 78% 22%, rgba(6,182,212,.20), transparent 55%),
-                  radial-gradient(900px 650px at 55% 85%, rgba(244,63,94,.14), transparent 60%),
-                  linear-gradient(180deg, var(--bg0), var(--bg1));
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(1100px 650px at 20% 12%, rgba(124,58,237,.22), transparent 55%),
+        radial-gradient(900px 600px at 80% 20%, rgba(6,182,212,.18), transparent 58%),
+        radial-gradient(900px 650px at 55% 88%, rgba(244,63,94,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
 
-    /* subtle animated grain + gradient drift */
+    a{ color:inherit; }
+
     .fx{
       position:fixed;
       inset:-2px;
@@ -67,25 +71,16 @@
       mix-blend-mode: overlay;
     }
 
-    a{ color:inherit; text-decoration:none; }
-
-    .wrap{
-      width:min(1100px, 100%);
-      margin:0 auto;
-      padding: 26px 18px 70px;
-      display:grid;
-      gap: 18px;
-    }
-
     header{
       position:sticky;
       top:0;
       z-index:10;
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, rgba(5,6,10,.78), rgba(5,6,10,.35));
-      border-bottom:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(6,7,11,.82), rgba(6,7,11,.35));
+      border-bottom: 1px solid rgba(255,255,255,.10);
     }
+
     .nav{
       width:min(1100px, 100%);
       margin:0 auto;
@@ -100,7 +95,6 @@
       display:flex;
       align-items:center;
       gap:12px;
-      min-width: 220px;
     }
 
     .logo{
@@ -115,16 +109,16 @@
 
     .brand h1{
       margin:0;
-      font-size: 1.03rem;
-      letter-spacing: .12em;
+      font-size: 1.02rem;
+      letter-spacing: .10em;
       text-transform: uppercase;
     }
     .brand small{
       display:block;
       margin-top:2px;
       color: var(--muted);
-      letter-spacing:.04em;
-      font-weight: 600;
+      letter-spacing:.03em;
+      font-weight: 650;
     }
 
     .navlinks{
@@ -147,12 +141,21 @@
       font-weight: 750;
       letter-spacing:.01em;
       transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      text-decoration:none;
       user-select:none;
     }
     .pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.22); }
 
+    main{
+      width:min(1100px, 100%);
+      margin:0 auto;
+      padding: 26px 18px 70px;
+      display:grid;
+      gap: 18px;
+    }
+
     .hero{
-      border-radius: var(--radius);
+      border-radius: var(--r);
       border: 1px solid rgba(255,255,255,.14);
       background:
         radial-gradient(900px 500px at 15% 30%, rgba(124,58,237,.24), transparent 60%),
@@ -188,21 +191,21 @@
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(0,0,0,.25);
       color: rgba(234,240,255,.92);
-      font-weight: 800;
+      font-weight: 850;
       letter-spacing:.06em;
       text-transform: uppercase;
       width: fit-content;
     }
 
-    .headline{
+    h2.title{
       margin: 14px 0 0;
-      font-size: clamp(2.2rem, 5vw, 4rem);
-      line-height: 1.02;
+      font-size: clamp(2.1rem, 4.8vw, 3.7rem);
+      line-height: 1.03;
       letter-spacing: -0.04em;
     }
 
-    .headline .grad{
-      background: linear-gradient(90deg, rgba(234,240,255,1), rgba(234,240,255,.85), rgba(6,182,212,1));
+    .grad{
+      background: linear-gradient(90deg, rgba(234,240,255,1), rgba(234,240,255,.82), rgba(6,182,212,1));
       -webkit-background-clip:text;
       background-clip:text;
       color:transparent;
@@ -211,90 +214,85 @@
     .sub{
       margin: 14px 0 0;
       color: var(--muted);
-      font-size: 1.1rem;
-      line-height: 1.6;
-      max-width: 70ch;
+      font-size: 1.08rem;
+      line-height: 1.65;
+      max-width: 78ch;
     }
 
-    .cta{
-      margin-top: 18px;
+    .meta{
+      margin-top: 16px;
       display:flex;
-      gap: 12px;
       flex-wrap:wrap;
-      align-items:center;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
       gap: 10px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      box-shadow: 0 18px 40px rgba(0,0,0,.25);
-      font-weight: 850;
+      color: rgba(234,240,255,.58);
+      font-weight: 650;
       letter-spacing:.01em;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease;
-    }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.24); }
-
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(124,58,237,.35), rgba(6,182,212,.22));
-      border-color: rgba(6,182,212,.30);
+      font-size: .95rem;
     }
 
     .grid{
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 18px;
-      align-items:stretch;
+      grid-template-columns: 1fr;
+      gap: 14px;
     }
-    @media (max-width: 920px){ .grid{ grid-template-columns: 1fr; } }
 
-    .card{
-      border-radius: var(--radius);
+    .item{
+      border-radius: var(--r);
       border: 1px solid rgba(255,255,255,.14);
       background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.025));
       box-shadow: 0 26px 60px rgba(0,0,0,.28);
-      padding: 22px;
+      padding: 18px;
+      display:grid;
+      grid-template-columns: 70px 1fr;
+      gap: 14px;
+      align-items:flex-start;
     }
 
-    .card h2{
-      margin:0;
+    @media (max-width: 520px){
+      .item{ grid-template-columns: 58px 1fr; }
+    }
+
+    .num{
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.05);
+      display:grid;
+      place-items:center;
+      font-weight: 950;
+      font-size: 1.25rem;
+      letter-spacing:-.02em;
+      box-shadow: 0 18px 40px rgba(0,0,0,.25);
+    }
+
+    .item h3{
+      margin: 2px 0 0;
       font-size: 1.15rem;
-      text-transform: uppercase;
-      letter-spacing:.10em;
+      letter-spacing:-.01em;
     }
 
-    .card p{ margin: 12px 0 0; color: var(--muted); line-height: 1.7; }
+    .item p{
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
 
-    .tagrow{ margin-top: 14px; display:flex; flex-wrap:wrap; gap:8px; }
-    .tag{
-      padding: 8px 10px;
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-top: 10px;
+      padding: 7px 10px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(0,0,0,.18);
-      color: rgba(234,240,255,.9);
+      color: rgba(234,240,255,.90);
       font-weight: 800;
       letter-spacing:.02em;
       font-size: .92rem;
+      width: fit-content;
     }
-
-    .biglink{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      margin-top: 14px;
-      padding: 14px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.04);
-    }
-    .biglink span{ color: var(--muted); font-weight: 750; }
-    .arrow{ opacity:.9; }
 
     footer{
       margin-top: 10px;
@@ -306,12 +304,13 @@
     .note{
       font-size: .95rem;
       color: rgba(234,240,255,.62);
+      max-width: 90ch;
+      line-height: 1.65;
     }
 
-    /* reduced motion */
     @media (prefers-reduced-motion: reduce){
       .fx, .hero::before{ animation:none !important; }
-      .pill, .btn{ transition:none !important; }
+      .pill{ transition:none !important; }
     }
   </style>
 </head>
@@ -321,79 +320,138 @@
 
   <header>
     <nav class="nav">
-      <a class="brand" href="#top" aria-label="Blickfeld Nord">
+      <a class="brand" href="#top" aria-label="Top 10 AI Themen">
         <div class="logo" aria-hidden="true"></div>
         <div>
-          <h1>Blickfeld Nord</h1>
-          <small>Band · Live · Direkt</small>
+          <h1>Top 10 AI Themen</h1>
+          <small>kurz erklärt · ohne Webzugriff</small>
         </div>
       </a>
-
       <div class="navlinks">
-        <a class="pill" href="#about">Über uns</a>
-        <a class="pill" href="#links">Links</a>
-        <a class="pill" href="#kontakt">Kontakt</a>
+        <a class="pill" href="#liste">Liste</a>
+        <a class="pill" href="#about">Hinweis</a>
       </div>
     </nav>
   </header>
 
-  <main class="wrap" id="top">
+  <main id="top">
     <section class="hero">
-      <div class="kicker">Nordwind im Verstärker</div>
-      <h2 class="headline"><span class="grad">Blickfeld Nord</span></h2>
+      <div class="kicker">Stand: grob 2026‑Trends (aus dem Kopf)</div>
+      <h2 class="title"><span class="grad">Die 10 Themen, die gerade überall auftauchen</span></h2>
       <p class="sub">
-        Eine Band mit Kante, Herz und ordentlich Schub nach vorne. <strong>Ja — Blickfeld Nord ist cool.</strong>
-        Wenn’s live knallt und der Refrain klebt, seid ihr hier richtig.
+        Hier ist ein kompaktes <strong>Top‑10‑Listing</strong> von AI‑Themen, die im Alltag von Produkt‑Teams,
+        Unternehmen und Entwicklern ständig relevant sind — <strong>ohne Live‑Websuche</strong>, sondern aus allgemeinem
+        State‑of‑the‑Art Wissen.
       </p>
-
-      <div class="cta">
-        <a class="btn primary" href="https://www.instagram.com/blickfeldnord?igsh=emtkdTJrc25wc29h" target="_blank" rel="noopener noreferrer">Instagram öffnen</a>
-        <a class="btn" href="#about">Mehr erfahren</a>
+      <div class="meta">
+        <span>• Kurz & praktisch</span>
+        <span>• Fokus auf Umsetzung</span>
+        <span>• Kein News‑Scraping</span>
       </div>
-      <p class="note" style="margin:14px 0 0;">@blickfeldnord</p>
     </section>
 
-    <section class="grid">
-      <section class="card" id="about">
-        <h2>Über Blickfeld Nord</h2>
-        <p>
-          Blickfeld Nord steht für Songs, die nicht geschniegelt sein müssen, um zu wirken:
-          energiegeladen, direkt und mit einer Portion „lass raus“.
-          Das ist Musik für Leute, die lieber vorne an der Bühne stehen als hinten am Tresen.
-        </p>
-        <div class="tagrow" aria-label="Tags">
-          <span class="tag">Live‑Energie</span>
-          <span class="tag">Hook‑Faktor</span>
-          <span class="tag">Nord‑Vibe</span>
-          <span class="tag">100% cool</span>
+    <section class="grid" id="liste">
+      <article class="item">
+        <div class="num">01</div>
+        <div>
+          <h3>AI‑Agenten & Tool‑Use</h3>
+          <p>Modelle, die planen, Aufgaben in Schritte zerlegen und aktiv Tools nutzen (Code, APIs, DB, Browser‑Automationen), statt nur Text zu generieren.</p>
+          <div class="badge">Warum wichtig: Automatisierung realer Workflows</div>
         </div>
-      </section>
+      </article>
 
-      <aside class="card" id="links">
-        <h2>Links</h2>
-        <p>
-          Der schnellste Weg zu News, Clips und Gigs:
-        </p>
-        <a class="biglink" href="https://www.instagram.com/blickfeldnord?igsh=emtkdTJrc25wc29h" target="_blank" rel="noopener noreferrer">
-          <div>
-            <strong>Instagram</strong><br />
-            <span>@blickfeldnord</span>
-          </div>
-          <div class="arrow">→</div>
-        </a>
-        <p class="note">(Weitere Links können jederzeit rein — sag einfach an.)</p>
-      </aside>
+      <article class="item">
+        <div class="num">02</div>
+        <div>
+          <h3>Multimodalität (Text · Bild · Audio · Video)</h3>
+          <p>Ein System versteht mehrere Modalitäten gleichzeitig: Bilder lesen, Audio transkribieren, Video analysieren und daraus Antworten oder Inhalte erzeugen.</p>
+          <div class="badge">Warum wichtig: „Real‑World“ Inputs statt nur Text</div>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="num">03</div>
+        <div>
+          <h3>On‑Device / Edge‑AI</h3>
+          <p>Kleinere/optimierte Modelle laufen direkt auf Laptop/Smartphone: schneller, günstiger, mehr Privacy, oft auch offline.</p>
+          <div class="badge">Warum wichtig: Datenschutz + Latenz + Kosten</div>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="num">04</div>
+        <div>
+          <h3>RAG 2.0 (Retrieval‑Augmented Generation)</h3>
+          <p>LLMs werden mit verlässlichen Datenquellen kombiniert: besseres Retrieval, Re‑Ranking, Zitate/Quellen, weniger Halluzinationen.</p>
+          <div class="badge">Warum wichtig: Antworten müssen belegbar sein</div>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="num">05</div>
+        <div>
+          <h3>Lange Kontexte & Memory</h3>
+          <p>Große Kontextfenster + persistentes Gedächtnis: der Assistant „merkt“ Projekte, Präferenzen und Verlauf (kontrolliert und privacy‑bewusst).</p>
+          <div class="badge">Warum wichtig: weniger Wiederholen, mehr Kontinuität</div>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="num">06</div>
+        <div>
+          <h3>Synthetic Data & Self‑Improvement Pipelines</h3>
+          <p>Trainingsdaten werden teils synthetisch erzeugt (Simulation, Self‑Play, Feedback‑Loops), um Modelle gezielt zu verbessern.</p>
+          <div class="badge">Warum wichtig: schnelleres Iterieren bei weniger echten Daten</div>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="num">07</div>
+        <div>
+          <h3>Alignment, Safety & Governance</h3>
+          <p>Wie verhindert man Missbrauch, Jailbreaks und unsichere Tool‑Ausführung? Dazu kommen Audits, Policies und regulatorische Anforderungen.</p>
+          <div class="badge">Warum wichtig: AI in Prod braucht Leitplanken</div>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="num">08</div>
+        <div>
+          <h3>Kompression: Distillation · Quantization · Pruning</h3>
+          <p>Große Modelle werden „eingedampft“ für Speed und Kosten (z.B. 4‑bit quantisiert), ohne zu viel Qualität zu verlieren.</p>
+          <div class="badge">Warum wichtig: Performance & Budget</div>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="num">09</div>
+        <div>
+          <h3>Open‑Source Modelle & Private Deployments</h3>
+          <p>Eigene Modelle/Weights betreiben (On‑Prem/Private Cloud), mit Fine‑Tuning und voller Datenkontrolle.</p>
+          <div class="badge">Warum wichtig: Kontrolle, Compliance, IP‑Schutz</div>
+        </div>
+      </article>
+
+      <article class="item">
+        <div class="num">10</div>
+        <div>
+          <h3>Realtime Voice & Conversational UX</h3>
+          <p>Echtzeit‑Sprachdialoge mit niedriger Latenz: natürlichere Assistants, „Telefon‑Feeling“, Live‑Übersetzung und Voice‑Workflows.</p>
+          <div class="badge">Warum wichtig: Bedienung wird „hands‑free“</div>
+        </div>
+      </article>
     </section>
 
-    <section class="card" id="kontakt">
-      <h2>Kontakt</h2>
-      <p>
-        Booking/Anfragen: Schreib uns am einfachsten via Instagram DM.
+    <section class="note" id="about">
+      <h3 style="margin:0 0 8px; letter-spacing:.08em; text-transform:uppercase; font-size:1rem;">Hinweis</h3>
+      <p style="margin:0;">
+        Diese Liste ist bewusst <strong>ohne Webzugriff</strong> erstellt (also keine tagesaktuellen News), sondern als kompakter Überblick über Themen,
+        die in AI‑Produkten und Teams seit kurzer Zeit besonders dominant sind.
       </p>
     </section>
 
     <footer>
-      © <span id="y"></span> Blickfeld Nord · Made by Mr. Smith 😎
+      © <span id="y"></span> · Top 10 AI Themen · Generated by Mr. Smith 😎
     </footer>
   </main>
 
