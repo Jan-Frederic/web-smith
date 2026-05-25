@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Lukas & Kai — Willkommen</title>
+    <title>Blickfeld Nord — Band Homepage</title>
     <style>
       :root {
         --paper: #fff7d6;
@@ -262,36 +262,41 @@
       <section class="panel" id="top">
         <div class="confetti" aria-hidden="true" id="confetti"></div>
 
-        <h1 class="title">Lukas &amp; Kai</h1>
+        <h1 class="title">Blickfeld&nbsp;Nord</h1>
         <p class="subtitle">
-          Willkommen auf der wahrscheinlich <span class="boom">COMIC‑MÄSSIGSTEN</span> Seite im Internet.
-          Diese Homepage ist absichtlich völlig drüber: Farbe, Krach, Bewegung.
+          Willkommen bei <strong>Blickfeld Nord</strong> — laut, ehrlich, live.
+          Und ja: Die Band ist <span class="boom">COOL</span>.
         </p>
-        <div class="speech">👋 Hey Lukas! 👋 Hey Kai! Ihr seid Legenden.</div>
+        <div class="speech">👋 Grüße an Lukas &amp; Kai — schön, dass ihr da seid.</div>
       </section>
 
       <section class="panel">
         <div class="grid">
           <div>
-            <h2 style="margin:0; font-size:1.35rem; text-transform:uppercase; letter-spacing:0.05em;">Was geht ab?</h2>
+            <h2 style="margin:0; font-size:1.35rem; text-transform:uppercase; letter-spacing:0.05em;">Über die Band</h2>
             <p class="subtitle" style="margin-top:0.65rem;">
-              Drück die Buttons, scroll ein bisschen rum und genieß das komplett übertriebene Comic‑Design.
-              (Ja, die Seite ist scrollable.)
+              <strong>Blickfeld Nord</strong> liefert Songs mit Druck, Hook und Haltung — perfekt für alle,
+              die live lieber schwitzen als sitzen. Kurz gesagt: Diese Band ist cool.
             </p>
 
             <div class="btns">
-              <button id="shake" type="button">Wackel‑Modus</button>
-              <button id="zap" type="button">ZAP!</button>
+              <a id="fbLink" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><button type="button">Facebook</button></a>
+              <a id="igLink" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><button type="button">Instagram</button></a>
               <button id="more" type="button">Mehr Konfetti</button>
             </div>
+
+            <p class="subtitle" style="margin-top:0.75rem;">
+              Hinweis: Ich konnte Facebook/Instagram ohne Browser nicht zuverlässig „selbst“ finden.
+              Wenn du mir die exakten Links gibst, setze ich sie sofort korrekt ein.
+            </p>
           </div>
 
           <aside class="sticker">
-            <h2>Mini‑Info</h2>
+            <h2>Quick‑Links</h2>
             <p class="subtitle" style="margin-top:0.6rem;">
-              <strong>Style:</strong> Comic / Acid / Rave<br />
-              <strong>Modus:</strong> Voll wild<br />
-              <strong>Ziel:</strong> Lukas &amp; Kai begrüßen
+              <strong>Facebook:</strong> folgt<br />
+              <strong>Instagram:</strong> folgt<br />
+              <strong>Vibe:</strong> Nord‑Energie
             </p>
           </aside>
         </div>
@@ -341,25 +346,7 @@
       setInterval(() => addConfetti(6), 1800);
 
       // Buttons
-      const shakeBtn = document.getElementById('shake');
-      const zapBtn = document.getElementById('zap');
       const moreBtn = document.getElementById('more');
-
-      let shaking = false;
-
-      shakeBtn.addEventListener('click', () => {
-        shaking = !shaking;
-        document.body.style.animation = shaking ? 'shake 0.14s infinite' : 'none';
-        shakeBtn.textContent = shaking ? 'Wackel‑Modus: AN' : 'Wackel‑Modus';
-      });
-
-      zapBtn.addEventListener('click', () => {
-        document.body.classList.add('zap');
-        document.documentElement.style.filter = 'hue-rotate(25deg) saturate(150%)';
-        setTimeout(() => { document.documentElement.style.filter = ''; }, 260);
-        addConfetti(40);
-      });
-
       moreBtn.addEventListener('click', () => addConfetti(60));
 
       // Inject keyframes for shake
