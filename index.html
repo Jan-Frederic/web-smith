@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="dark" />
-  <title>Erwischt!</title>
-  <meta name="description" content="Bunte Demo-Homepage – frisch überschrieben, ordentlich CSS, mit Fokus auf gute Optik und Performance." />
+  <title>Wau Wau 🐶</title>
+  <meta name="description" content="Alles neu: bunte Mini-Homepage mit kleinem Hund-Emoji, Glas-Cards und sauberem CSS." />
 
   <style>
     :root{
@@ -13,18 +13,18 @@
       --bg1:#0a0c14;
       --ink:#eaf0ff;
       --muted:rgba(234,240,255,.72);
+      --card:rgba(255,255,255,.06);
       --stroke:rgba(255,255,255,.16);
+      --shadow: 0 18px 60px rgba(0,0,0,.42);
 
-      --a:#7c3aed; /* purple */
-      --b:#06b6d4; /* cyan */
-      --c:#22c55e; /* green */
-      --d:#f97316; /* orange */
-      --e:#f43f5e; /* rose */
+      --a:#7c3aed;
+      --b:#06b6d4;
+      --c:#22c55e;
+      --d:#f97316;
+      --e:#f43f5e;
 
       --r:22px;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
     }
-
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
 
@@ -33,14 +33,12 @@
       color:var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       background:
-        radial-gradient(1100px 650px at 20% 12%, rgba(124,58,237,.26), transparent 55%),
-        radial-gradient(900px 600px at 80% 20%, rgba(6,182,212,.20), transparent 58%),
-        radial-gradient(900px 650px at 55% 88%, rgba(244,63,94,.13), transparent 60%),
+        radial-gradient(1100px 650px at 15% 10%, rgba(124,58,237,.28), transparent 55%),
+        radial-gradient(900px 600px at 80% 18%, rgba(6,182,212,.22), transparent 58%),
+        radial-gradient(900px 650px at 50% 92%, rgba(244,63,94,.16), transparent 60%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
-
-    a{ color:inherit; }
 
     .fx{
       position:fixed;
@@ -48,16 +46,16 @@
       pointer-events:none;
       z-index:-1;
       background:
-        radial-gradient(circle at 10% 20%, rgba(34,197,94,.10), transparent 55%),
-        radial-gradient(circle at 90% 30%, rgba(249,115,22,.10), transparent 55%),
-        radial-gradient(circle at 50% 90%, rgba(124,58,237,.10), transparent 55%);
+        radial-gradient(circle at 8% 20%, rgba(34,197,94,.12), transparent 55%),
+        radial-gradient(circle at 92% 30%, rgba(249,115,22,.12), transparent 55%),
+        radial-gradient(circle at 50% 90%, rgba(124,58,237,.12), transparent 55%);
       filter:saturate(125%) contrast(110%);
       animation: drift 18s ease-in-out infinite;
       opacity:.95;
     }
     @keyframes drift{
       0%,100%{ transform: translate3d(0,0,0) scale(1); }
-      50%{ transform: translate3d(-1.5%,1.2%,0) scale(1.02); }
+      50%{ transform: translate3d(-1.6%,1.2%,0) scale(1.02); }
     }
 
     .grain{
@@ -66,7 +64,7 @@
       pointer-events:none;
       z-index:-1;
       opacity:.10;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
       mix-blend-mode: overlay;
     }
 
@@ -90,16 +88,23 @@
       gap:16px;
     }
 
-    .brand{ display:flex; align-items:center; gap:12px; }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
     .logo{
       width:40px; height:40px;
       border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.18);
       background:
         radial-gradient(circle at 30% 30%, rgba(234,240,255,.35), transparent 55%),
         conic-gradient(from 210deg, var(--a), var(--b), var(--c), var(--d), var(--e), var(--a));
       box-shadow: 0 18px 40px rgba(0,0,0,.35);
-      border: 1px solid rgba(255,255,255,.18);
-      transform: rotate(-6deg);
+      display:grid;
+      place-items:center;
+      font-size:18px;
     }
 
     .brand h1{
@@ -112,7 +117,7 @@
     .brand small{
       display:block;
       margin-top:2px;
-      color:var(--muted);
+      color: var(--muted);
       letter-spacing:.03em;
     }
 
@@ -121,28 +126,21 @@
       align-items:center;
       gap:10px;
       padding:10px 12px;
-      border-radius: 999px;
+      border-radius:999px;
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.04);
-      box-shadow: 0 10px 24px rgba(0,0,0,.18);
     }
 
-    .dot{
-      width:10px; height:10px;
+    .pill .chip{
+      width:12px; height:12px;
       border-radius:50%;
       background: conic-gradient(from 180deg, var(--a), var(--b), var(--c), var(--d), var(--e), var(--a));
       box-shadow: 0 0 0 4px rgba(255,255,255,.06);
-      animation: pulse 1.6s ease-in-out infinite;
+      animation: pulse 1.7s ease-in-out infinite;
     }
-    @keyframes pulse{
-      0%,100%{ transform: scale(1); opacity:1; }
-      50%{ transform: scale(1.12); opacity:.85; }
-    }
+    @keyframes pulse{ 0%,100%{transform:scale(1);} 50%{transform:scale(1.14);} }
 
-    .pill span{
-      color:var(--muted);
-      font-size:.92rem;
-    }
+    .pill span{ color: var(--muted); font-size:.92rem; }
 
     main{
       width:min(1100px, 100%);
@@ -154,16 +152,13 @@
       display:grid;
       grid-template-columns: 1.2fr .8fr;
       gap: 18px;
-      align-items: stretch;
+      align-items:stretch;
     }
-
-    @media (max-width: 880px){
-      .hero{ grid-template-columns: 1fr; }
-    }
+    @media (max-width: 880px){ .hero{ grid-template-columns: 1fr; } }
 
     .card{
       border-radius: var(--r);
-      background: rgba(255,255,255,.06);
+      background: var(--card);
       border: 1px solid rgba(255,255,255,.14);
       box-shadow: var(--shadow);
       overflow:hidden;
@@ -177,46 +172,40 @@
       background:
         radial-gradient(600px 140px at 10% 10%, rgba(124,58,237,.25), transparent 55%),
         radial-gradient(500px 120px at 95% 25%, rgba(6,182,212,.18), transparent 55%),
-        radial-gradient(520px 160px at 40% 110%, rgba(244,63,94,.15), transparent 60%);
+        radial-gradient(520px 160px at 40% 110%, rgba(244,63,94,.14), transparent 60%);
       pointer-events:none;
-      opacity:.9;
+      opacity:.95;
     }
 
     .card > *{ position:relative; }
 
-    .hero-left{
-      padding: 22px;
-      min-height: 320px;
-    }
+    .hero-left{ padding: 22px; min-height: 320px; }
+    .hero-right{ padding: 18px; display:flex; flex-direction:column; gap:12px; min-height: 320px; }
 
     .kicker{
       display:flex;
       align-items:center;
       gap:10px;
-      color:var(--muted);
+      color: var(--muted);
       letter-spacing:.08em;
       text-transform: uppercase;
       font-size:.78rem;
       margin-bottom: 10px;
     }
-
-    .kicker b{
-      color:var(--ink);
-      font-weight:700;
-    }
+    .kicker b{ color: var(--ink); font-weight:700; }
 
     .headline{
-      margin:0;
-      font-size: clamp(2.2rem, 5vw, 3.5rem);
-      line-height:1.03;
+      margin: 0;
+      font-size: clamp(2.1rem, 5vw, 3.4rem);
+      line-height: 1.03;
       letter-spacing:-.02em;
     }
 
     .headline .grad{
       background: linear-gradient(90deg, var(--a), var(--b), var(--c), var(--d), var(--e));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       filter: drop-shadow(0 12px 30px rgba(124,58,237,.18));
     }
 
@@ -225,15 +214,10 @@
       max-width: 60ch;
       color: var(--muted);
       font-size: 1.05rem;
-      line-height:1.5;
+      line-height: 1.55;
     }
 
-    .cta-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin-top: 18px;
-    }
+    .cta-row{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
 
     .btn{
       cursor:pointer;
@@ -242,18 +226,14 @@
       color: var(--ink);
       padding: 12px 14px;
       border-radius: 14px;
+      text-decoration:none;
       display:flex;
       align-items:center;
       gap:10px;
-      text-decoration:none;
       transition: transform .12s ease, background .12s ease, border-color .12s ease;
       user-select:none;
     }
-    .btn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.26);
-      background: rgba(255,255,255,.08);
-    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.26); }
 
     .btn .ico{
       width:26px; height:26px;
@@ -265,37 +245,15 @@
       font-size: 14px;
     }
 
-    .hero-right{
-      padding: 18px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      min-height: 320px;
-    }
-
-    .statgrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
+    .statgrid{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
     .stat{
       padding: 14px;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(0,0,0,.15);
     }
-    .stat .n{
-      font-size: 1.25rem;
-      font-weight: 800;
-      letter-spacing:-.02em;
-    }
-    .stat .l{
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: .92rem;
-      line-height:1.3;
-    }
+    .stat .n{ font-size:1.25rem; font-weight:800; letter-spacing:-.02em; }
+    .stat .l{ margin-top:6px; color:var(--muted); font-size:.92rem; line-height:1.3; }
 
     .strip{
       margin-top:auto;
@@ -304,18 +262,8 @@
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.04);
     }
-
-    .strip h3{
-      margin:0;
-      font-size: 1rem;
-    }
-
-    .strip p{
-      margin: 8px 0 0;
-      color: var(--muted);
-      line-height:1.5;
-      font-size:.95rem;
-    }
+    .strip h3{ margin:0; font-size: 1rem; }
+    .strip p{ margin: 8px 0 0; color: var(--muted); line-height:1.5; font-size:.95rem; }
 
     .section{
       margin-top: 18px;
@@ -323,10 +271,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
     }
-
-    @media (max-width: 880px){
-      .section{ grid-template-columns: 1fr; }
-    }
+    @media (max-width: 880px){ .section{ grid-template-columns: 1fr; } }
 
     .feature{
       padding: 16px;
@@ -347,17 +292,8 @@
       margin-bottom: 10px;
     }
 
-    .feature h4{
-      margin: 0;
-      font-size: 1.02rem;
-    }
-
-    .feature p{
-      margin: 8px 0 0;
-      color: var(--muted);
-      line-height: 1.5;
-      font-size: .95rem;
-    }
+    .feature h4{ margin:0; font-size: 1.02rem; }
+    .feature p{ margin: 8px 0 0; color: var(--muted); line-height:1.5; font-size:.95rem; }
 
     footer{
       color: rgba(234,240,255,.65);
@@ -384,6 +320,17 @@
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(0,0,0,.18);
     }
+
+    /* small dog wag animation */
+    .wag{
+      display:inline-block;
+      transform-origin: 50% 100%;
+      animation: wag 0.9s ease-in-out infinite;
+    }
+    @keyframes wag{
+      0%,100%{ transform: rotate(0deg); }
+      50%{ transform: rotate(-10deg); }
+    }
   </style>
 </head>
 
@@ -394,16 +341,16 @@
   <header>
     <div class="nav">
       <div class="brand" aria-label="Brand">
-        <div class="logo" aria-hidden="true"></div>
+        <div class="logo" aria-hidden="true">🐶</div>
         <div>
-          <h1>Erwischt!</h1>
-          <small>Bunte Demo-Homepage</small>
+          <h1>Wau Wau</h1>
+          <small>Mini-Homepage • alles neu</small>
         </div>
       </div>
 
       <div class="pill" role="status" aria-live="polite">
-        <div class="dot" aria-hidden="true"></div>
-        <span>CSS: komplett neu • Layout: modern</span>
+        <div class="chip" aria-hidden="true"></div>
+        <span>CSS: bunt • Layout: clean</span>
       </div>
     </div>
   </header>
@@ -411,49 +358,48 @@
   <main>
     <section class="hero">
       <div class="card hero-left">
-        <div class="kicker"><span>🫧</span><b>Jetzt</b> knallt’s</div>
-        <h2 class="headline"><span class="grad">Erwischt!</span> – kurz, bunt, sauber.</h2>
+        <div class="kicker"><span>🫧</span><b>Wau</b> klingt so gut</div>
+        <h2 class="headline"><span class="grad">Wau Wau</span> 🐶</h2>
         <p class="sub">
-          Diese Seite wurde komplett überschrieben: frische Farbverläufe, Glas-Effekte, weiche Animationen und
-          ein cleanes Layout. Keine Web-Requests – alles läuft als statische Datei.
+          Komplett neue Demo-Seite auf deinem Repo. Drück den Button — und schau, wie der kleine Hund kurz „wedelt“.
         </p>
 
         <div class="cta-row">
           <a class="btn" href="#features" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'}); return false;">
             <span class="ico" aria-hidden="true">✨</span>
-            <span>Features ansehen</span>
+            <span>Features</span>
           </a>
-          <a class="btn" href="README.md">
-            <span class="ico" aria-hidden="true">📄</span>
-            <span>README öffnen</span>
-          </a>
+          <button class="btn" type="button" id="wagBtn">
+            <span class="ico" aria-hidden="true">💫</span>
+            <span>Hund wedeln</span>
+          </button>
         </div>
       </div>
 
       <aside class="card hero-right">
         <div class="statgrid">
           <div class="stat">
-            <div class="n">0</div>
-            <div class="l">externe Calls • alles lokal</div>
-          </div>
-          <div class="stat">
             <div class="n">1</div>
             <div class="l">Datei: index.html</div>
           </div>
           <div class="stat">
-            <div class="n">⚡</div>
-            <div class="l">schnelles UI (CSS-first)</div>
+            <div class="n">0</div>
+            <div class="l">Web-Requests</div>
           </div>
           <div class="stat">
-            <div class="n">🧊</div>
-            <div class="l">Glas + Grain + Glow</div>
+            <div class="n">🐾</div>
+            <div class="l">Mini-Wedel-Anim</div>
+          </div>
+          <div class="stat">
+            <div class="n">⚡</div>
+            <div class="l">CSS-first UI</div>
           </div>
         </div>
 
         <div class="strip">
-          <h3>Mini-Interaktion</h3>
+          <h3>Kleiner Hund (live)</h3>
           <p>
-            Klick auf <span class="kbd">Features</span> und scroll ruhig runter. Das ist nur Demo – aber sieht ordentlich aus.
+            Klick auf „Hund wedeln“ — dann bekommt die Pfote kurz mehr Stimmung.
           </p>
         </div>
       </aside>
@@ -461,28 +407,28 @@
 
     <section id="features" class="section" aria-label="Features">
       <article class="feature">
-        <div class="badge" aria-hidden="true">🌈</div>
-        <h4>Ordentlich bunt</h4>
-        <p>Mehrfarbige Gradients, die sauber über den Hintergrund gelegt sind — ohne das Design zu überladen.</p>
+        <div class="badge" aria-hidden="true">🎨</div>
+        <h4>Bunt & sauber</h4>
+        <p>Kontrast, Glas-Effekt und Farbverläufe, damit’s ordentlich aussieht — ohne Overkill.</p>
       </article>
 
       <article class="feature">
-        <div class="badge" aria-hidden="true">🪟</div>
-        <h4>Glas-Look</h4>
-        <p>Blur + leichte Borders + Schatten — damit Cards „freistehen“, aber immer lesbar bleiben.</p>
+        <div class="badge" aria-hidden="true">🧊</div>
+        <h4>Glas-Cards</h4>
+        <p>Weiche Borders + Schatten sorgen dafür, dass der Content freisteht.</p>
       </article>
 
       <article class="feature">
-        <div class="badge" aria-hidden="true">🧠</div>
-        <h4>Kein Web-Zugriff</h4>
-        <p>Alles als statische Datei: schneller Start, keine Abhängigkeiten, keine Daten-Leaks.</p>
+        <div class="badge" aria-hidden="true">🐶</div>
+        <h4>Hund-Emoji</h4>
+        <p>Animations-Feeling: „wag“ per CSS Keyframes, kein Extra-Script nötig.</p>
       </article>
     </section>
 
     <footer>
       <div class="footer-chip">
         <span>🛠️</span>
-        <span>Überschrieben am</span>
+        <span>Stand</span>
         <span class="kbd" id="stamp">—</span>
       </div>
     </footer>
@@ -491,11 +437,27 @@
   <script>
     (function(){
       const el = document.getElementById('stamp');
-      const d = new Date();
-      // simple local timestamp
-      const pad = (n)=>String(n).padStart(2,'0');
-      const s = d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())+" "+pad(d.getHours())+":"+pad(d.getMinutes());
-      if(el) el.textContent = s;
+      if(el){
+        const d = new Date();
+        const pad = (n)=>String(n).padStart(2,'0');
+        el.textContent = d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())+" "+pad(d.getHours())+":"+pad(d.getMinutes());
+      }
+
+      const btn = document.getElementById('wagBtn');
+      btn?.addEventListener('click', ()=>{
+        // trigger a short extra wag by toggling a class on the dog icon
+        const logo = document.querySelector('.logo');
+        if(!logo) return;
+        logo.classList.remove('wag');
+        // force reflow
+        void logo.offsetWidth;
+        logo.classList.add('wag');
+        setTimeout(()=>logo.classList.remove('wag'), 900);
+      });
+
+      // give initial wag (subtle)
+      const logo = document.querySelector('.logo');
+      logo?.classList.add('wag');
     })();
   </script>
 </body>
