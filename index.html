@@ -124,6 +124,15 @@
       font-weight:800;
     }
     button:hover{filter:brightness(1.1)}
+    .pick{
+      min-width: 140px;
+      background: rgba(255,255,255,.06);
+    }
+    .pick.active{
+      outline: 2px solid rgba(0,212,255,.55);
+      box-shadow: 0 0 0 6px rgba(0,212,255,.12);
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 <body>
@@ -134,11 +143,18 @@
     <section class="grid">
       <div class="card">
         <div class="row">
-          <div class="pill">⏳ Countdown: <span id="count">3</span></div>
+          <div class="pill">⏳ Countdown: <span id="count">5</span></div>
           <div class="pill">🔄 Runde: <span id="round">1</span></div>
           <button id="again" type="button" title="Spiele nochmal (ohne Reload)">Nochmal!</button>
         </div>
-        <div class="big" id="status">Bereit…</div>
+
+        <div class="big" id="status">Wähle deinen Zug…</div>
+
+        <div class="row" style="justify-content:center; margin: 10px 0 4px;">
+          <button class="pick" type="button" data-pick="schere">✂️ Schere</button>
+          <button class="pick" type="button" data-pick="stein">🪨 Stein</button>
+          <button class="pick" type="button" data-pick="papier">📄 Papier</button>
+        </div>
 
         <div class="vs" aria-label="Spielauswahl">
           <div class="choice"><div><div style="opacity:.7;font-weight:700;font-size:.95rem">DU</div><div id="you">—</div></div></div>
@@ -146,8 +162,8 @@
           <div class="choice"><div><div style="opacity:.7;font-weight:700;font-size:.95rem">ICH</div><div id="ai">—</div></div></div>
         </div>
 
-        <div class="result" id="result">Reload die Seite… dann geht’s los.</div>
-        <div class="hint">Tipp: Reload (F5) = neue Runde. „Nochmal!“ spielt sofort neu.</div>
+        <div class="result" id="result">Wähle in 5 Sekunden Schere/Stein/Papier – sonst wird zufällig gewählt.</div>
+        <div class="hint">Tipp: Reload (F5) = neue Runde. „Nochmal!“ startet neu.</div>
       </div>
     </section>
   </main>
@@ -166,6 +182,7 @@
     const elAi     = document.getElementById('ai');
     const elResult = document.getElementById('result');
     const btnAgain = document.getElementById('again');
+    const pickButtons = Array.from(document.querySelectorAll('.pick'));
 
     // Keep a simple per-session round counter in sessionStorage.
     const roundKey = 'rps_round';
@@ -206,38 +223,61 @@
     }
 
     let timer = null;
-    function playWithCountdown(seconds = 3) {
+    let locked = false;
+    let selected = null; // {key,label}
+
+    function setActivePick(key) {
+      pickButtons.forEach(btn => {
+        const isActive = btn.dataset.pick === key;
+        btn.classList.toggle('active', isActive);
+      });
+    }
+
+    pickButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (locked) return;
+        const k = btn.dataset.pick;
+        selected = choices.find(c => c.key === k) || null;
+        setActivePick(k);
+        elStatus.textContent = 'Gute Wahl.';
+      });
+    });
+
+    function playWithCountdown(seconds = 5) {
       if (timer) clearInterval(timer);
+      locked = false;
+      selected = null;
+      setActivePick(null);
+
       let t = seconds;
       elCount.textContent = String(t);
-      elStatus.textContent = 'Bereit…';
+      elStatus.textContent = 'Wähle deinen Zug…';
       elYou.textContent = '—';
       elAi.textContent = '—';
-      elResult.textContent = '3…2…1…';
+      elResult.textContent = 'Wähle in 5 Sekunden – sonst wird zufällig gewählt.';
 
       timer = setInterval(() => {
         t -= 1;
         elCount.textContent = String(Math.max(t, 0));
 
-        if (t === 2) elStatus.textContent = 'Schere…';
-        if (t === 1) elStatus.textContent = 'Stein…';
         if (t === 0) {
-          elStatus.textContent = 'Papier!';
+          locked = true;
           clearInterval(timer);
           timer = null;
 
-          const you = pickRandom();
+          const you = selected || pickRandom();
           const ai  = pickRandom();
-          // slight dramatic delay
-          setTimeout(() => renderResult(you, ai), 350);
+
+          elStatus.textContent = selected ? 'Zeit!' : 'Zeit! (zufällig gewählt)';
+          setTimeout(() => renderResult(you, ai), 250);
         }
-      }, 700);
+      }, 1000);
     }
 
-    btnAgain.addEventListener('click', () => playWithCountdown(3));
+    btnAgain.addEventListener('click', () => playWithCountdown(5));
 
     // Auto-play on every load.
-    playWithCountdown(3);
+    playWithCountdown(5);
   </script>
 </body>
 </html>
