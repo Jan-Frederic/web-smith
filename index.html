@@ -1,9 +1,416 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello World</title>
-</head>
-<body>
-    <h1>Hello World</h1>
-</body>
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Web-Smith — Rot</title>
+    <style>
+      :root {
+        --bg0: #070003;
+        --bg1: #120006;
+        --text: #ffe8ee;
+        --muted: #ffb3c7;
+        --a: #ff2a55;
+        --b: #b4002a;
+        --c: #ff6b8a;
+        --card: rgba(255, 42, 85, 0.1);
+        --card2: rgba(180, 0, 42, 0.14);
+        --border: rgba(255, 179, 199, 0.22);
+        --shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
+        --radius: 22px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        color: var(--text);
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Helvetica,
+          Arial,
+          "Apple Color Emoji",
+          "Segoe UI Emoji";
+        background:
+          radial-gradient(
+            1100px 700px at 12% 10%,
+            rgba(255, 42, 85, 0.45),
+            transparent 60%
+          ),
+          radial-gradient(
+            900px 600px at 85% 18%,
+            rgba(180, 0, 42, 0.5),
+            transparent 62%
+          ),
+          radial-gradient(
+            1200px 900px at 55% 88%,
+            rgba(255, 107, 138, 0.22),
+            transparent 62%
+          ),
+          linear-gradient(180deg, var(--bg0), var(--bg1));
+        overflow-x: hidden;
+      }
+
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 52px 18px 80px;
+      }
+
+      header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 28px;
+      }
+
+      .brand {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 42, 85, 0.2),
+          rgba(180, 0, 42, 0.14)
+        );
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        width: fit-content;
+        backdrop-filter: blur(10px);
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 99px;
+        background: radial-gradient(
+          circle at 30% 30%,
+          #fff,
+          var(--a) 35%,
+          var(--b) 80%
+        );
+        box-shadow:
+          0 0 0 4px rgba(255, 42, 85, 0.18),
+          0 0 18px rgba(255, 42, 85, 0.55);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(36px, 4.8vw, 62px);
+        letter-spacing: -0.03em;
+        line-height: 1.02;
+      }
+
+      .sub {
+        margin: 0;
+        color: var(--muted);
+        max-width: 60ch;
+        font-size: 16px;
+        line-height: 1.55;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+        margin-top: 18px;
+      }
+
+      @media (max-width: 860px) {
+        header {
+          flex-direction: column;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        background: linear-gradient(180deg, var(--card), var(--card2));
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 18px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card:before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        background: radial-gradient(
+          500px 220px at 20% 10%,
+          rgba(255, 42, 85, 0.28),
+          transparent 60%
+        );
+        pointer-events: none;
+        opacity: 0.9;
+      }
+
+      .card > * {
+        position: relative;
+      }
+
+      .btnrow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      a.btn {
+        text-decoration: none;
+        color: var(--text);
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.18);
+        transition:
+          transform 0.12s ease,
+          background 0.12s ease,
+          border-color 0.12s ease;
+      }
+
+      a.btn:hover {
+        transform: translateY(-1px);
+        background: rgba(255, 42, 85, 0.16);
+        border-color: rgba(255, 107, 138, 0.55);
+      }
+
+      .big {
+        font-weight: 700;
+        font-size: 18px;
+        margin: 0 0 10px;
+      }
+
+      ul {
+        margin: 10px 0 0;
+        padding-left: 18px;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .meter {
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(255, 179, 199, 0.12);
+        overflow: hidden;
+        border: 1px solid rgba(255, 179, 199, 0.18);
+        margin-top: 10px;
+      }
+
+      .meter > span {
+        display: block;
+        height: 100%;
+        width: 72%;
+        background: linear-gradient(90deg, var(--b), var(--a), var(--c));
+        box-shadow: 0 0 20px rgba(255, 42, 85, 0.55);
+      }
+
+      footer {
+        margin-top: 22px;
+        color: rgba(255, 179, 199, 0.75);
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="brand">
+          <div class="pill">
+            <span class="dot"></span><span>Web-Smith</span>
+          </div>
+          <h1>
+            Rotmodus. <span style="color: var(--c)">Blutrot</span> &amp; Kante.
+          </h1>
+          <p class="sub">
+            Diverse Rottöne, dunkler Hintergrund, fette Akzente. Wenn du willst,
+            drehe ich das noch weiter Richtung "Vampir-Tech" oder "Dark Ruby".
+          </p>
+        </div>
+        <div class="card" style="min-width: 260px">
+          <p class="big">Status</p>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 10px;
+            "
+          >
+            <span style="color: var(--muted)">Red intensity</span>
+            <strong>72%</strong>
+          </div>
+          <div class="meter"><span></span></div>
+          <div class="btnrow">
+            <a
+              class="btn"
+              href="#"
+              onclick="
+                togglePulse();
+                return false;
+              "
+              >Pulse</a
+            >
+            <a
+              class="btn"
+              href="#"
+              onclick="
+                toggleAsh();
+                return false;
+              "
+              >Asche</a
+            >
+          </div>
+        </div>
+      </header>
+
+      <section class="grid">
+        <div class="card">
+          <p class="big">Was ist neu?</p>
+          <ul>
+            <li>Background-Glows in mehreren Rot-Schichten</li>
+            <li>Cards mit Glas-Effekt + Ruby-Outline</li>
+            <li>Akzente: Karmesin, Blutrot, Pink-Rosé</li>
+          </ul>
+
+          <div class="btnrow">
+            <a
+              class="btn"
+              href="https://github.com/Jan-Frederic/web-smith"
+              target="_blank"
+              rel="noreferrer"
+              >Repo</a
+            >
+            <a
+              class="btn"
+              href="https://github.com/Jan-Frederic/web-smith/issues"
+              target="_blank"
+              rel="noreferrer"
+              >Issues</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="big">Mini-Spielerei</p>
+          <p class="sub" style="margin-top: 0">
+            Ein bisschen Bewegung — aber nicht nervig.
+          </p>
+          <div class="btnrow">
+            <a
+              class="btn"
+              href="#"
+              onclick="
+                shake();
+                return false;
+              "
+              >Shake</a
+            >
+            <a
+              class="btn"
+              href="#"
+              onclick="
+                spray();
+                return false;
+              "
+              >Spray</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <span>© Web-Smith • Rot-Theme</span>
+      </footer>
+    </div>
+
+    <script>
+      let pulsing = false;
+      let ashy = false;
+
+      function togglePulse() {
+        pulsing = !pulsing;
+        document.documentElement.style.setProperty(
+          "--shadow",
+          pulsing
+            ? "0 22px 85px rgba(255,42,85,.20)"
+            : "0 18px 60px rgba(0,0,0,.55)",
+        );
+        document.body.style.transition = "filter .25s ease";
+        document.body.style.filter = pulsing ? "saturate(1.15)" : "saturate(1)";
+      }
+
+      function toggleAsh() {
+        ashy = !ashy;
+        document.body.style.transition = "filter .25s ease";
+        document.body.style.filter = ashy
+          ? "grayscale(.15) contrast(1.05)"
+          : "none";
+      }
+
+      function shake() {
+        const el = document.querySelector(".wrap");
+        el.animate(
+          [
+            { transform: "translate3d(0,0,0)" },
+            { transform: "translate3d(-1px,1px,0)" },
+            { transform: "translate3d(2px,-1px,0)" },
+            { transform: "translate3d(-2px,-1px,0)" },
+            { transform: "translate3d(1px,2px,0)" },
+            { transform: "translate3d(0,0,0)" },
+          ],
+          { duration: 280, iterations: 1 },
+        );
+      }
+
+      function spray() {
+        const s = document.createElement("div");
+        const x = Math.round(20 + Math.random() * 60);
+        const y = Math.round(10 + Math.random() * 70);
+        const r = 180 + Math.random() * 420;
+        s.style.position = "fixed";
+        s.style.left = x + "vw";
+        s.style.top = y + "vh";
+        s.style.width = r + "px";
+        s.style.height = r + "px";
+        s.style.borderRadius = "999px";
+        s.style.pointerEvents = "none";
+        s.style.opacity = "0";
+        s.style.filter = "blur(10px)";
+        s.style.background =
+          "radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), rgba(255,42,85,.18), transparent 62%)";
+        document.body.appendChild(s);
+        s.animate(
+          [
+            { opacity: 0, transform: "scale(.85)" },
+            { opacity: 1, transform: "scale(1)" },
+            { opacity: 0, transform: "scale(1.08)" },
+          ],
+          { duration: 900, easing: "ease-out" },
+        ).onfinish = () => s.remove();
+      }
+    </script>
+  </body>
 </html>
