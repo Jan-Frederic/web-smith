@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Web-Smith — Rot</title>
+    <title>Web-Smith — Hangman</title>
     <style>
       :root {
         --bg0: #070003;
@@ -18,6 +18,8 @@
         --border: rgba(255, 179, 199, 0.22);
         --shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
         --radius: 22px;
+        --ok: #35ff9a;
+        --warn: #ffd36b;
       }
 
       * {
@@ -61,9 +63,9 @@
       }
 
       .wrap {
-        max-width: 980px;
+        max-width: 1000px;
         margin: 0 auto;
-        padding: 52px 18px 80px;
+        padding: 42px 18px 80px;
       }
 
       header {
@@ -71,13 +73,7 @@
         align-items: flex-start;
         justify-content: space-between;
         gap: 18px;
-        margin-bottom: 28px;
-      }
-
-      .brand {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+        margin-bottom: 16px;
       }
 
       .pill {
@@ -113,17 +109,16 @@
       }
 
       h1 {
-        margin: 0;
-        font-size: clamp(36px, 4.8vw, 62px);
+        margin: 10px 0 0;
+        font-size: clamp(30px, 4.2vw, 54px);
         letter-spacing: -0.03em;
-        line-height: 1.02;
+        line-height: 1.04;
       }
 
       .sub {
-        margin: 0;
+        margin: 10px 0 0;
         color: var(--muted);
-        max-width: 60ch;
-        font-size: 16px;
+        max-width: 70ch;
         line-height: 1.55;
       }
 
@@ -134,7 +129,7 @@
         margin-top: 18px;
       }
 
-      @media (max-width: 860px) {
+      @media (max-width: 900px) {
         header {
           flex-direction: column;
         }
@@ -171,15 +166,27 @@
         position: relative;
       }
 
+      .row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+      }
+
       .btnrow {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
-        margin-top: 14px;
       }
 
-      a.btn {
-        text-decoration: none;
+      button,
+      input {
+        font: inherit;
+      }
+
+      .btn {
+        cursor: pointer;
         color: var(--text);
         padding: 10px 12px;
         border-radius: 12px;
@@ -188,229 +195,475 @@
         transition:
           transform 0.12s ease,
           background 0.12s ease,
-          border-color 0.12s ease;
+          border-color 0.12s ease,
+          filter 0.12s ease;
       }
 
-      a.btn:hover {
+      .btn:hover {
         transform: translateY(-1px);
         background: rgba(255, 42, 85, 0.16);
         border-color: rgba(255, 107, 138, 0.55);
       }
 
-      .big {
-        font-weight: 700;
-        font-size: 18px;
-        margin: 0 0 10px;
+      .btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        filter: grayscale(0.3);
       }
 
-      ul {
-        margin: 10px 0 0;
-        padding-left: 18px;
+      .kbd {
+        display: grid;
+        grid-template-columns: repeat(10, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      @media (max-width: 520px) {
+        .kbd {
+          grid-template-columns: repeat(7, minmax(0, 1fr));
+        }
+      }
+
+      .key {
+        padding: 10px 0;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.18);
+        color: var(--text);
+        cursor: pointer;
+        text-transform: uppercase;
+      }
+
+      .key:hover {
+        background: rgba(255, 42, 85, 0.14);
+      }
+
+      .key[disabled] {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .word {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+        font-size: 22px;
+        letter-spacing: 0.08em;
+      }
+
+      .slot {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 24px;
+        padding: 6px 8px;
+        border-bottom: 2px solid rgba(255, 179, 199, 0.45);
+      }
+
+      .meta {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      @media (max-width: 700px) {
+        .meta {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .pill2 {
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.12);
+        border-radius: 14px;
+        padding: 10px 12px;
+      }
+
+      .label {
         color: var(--muted);
-        line-height: 1.55;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
 
-      .meter {
-        height: 10px;
-        border-radius: 999px;
-        background: rgba(255, 179, 199, 0.12);
-        overflow: hidden;
-        border: 1px solid rgba(255, 179, 199, 0.18);
+      .value {
+        margin-top: 6px;
+        font-weight: 700;
+        font-size: 16px;
+      }
+
+      .msg {
+        margin-top: 12px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.16);
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .msg.ok {
+        color: rgba(53, 255, 154, 0.95);
+        border-color: rgba(53, 255, 154, 0.3);
+      }
+
+      .msg.warn {
+        color: rgba(255, 211, 107, 0.95);
+        border-color: rgba(255, 211, 107, 0.32);
+      }
+
+      .msg.bad {
+        color: rgba(255, 107, 138, 0.95);
+        border-color: rgba(255, 107, 138, 0.32);
+      }
+
+      .man {
+        width: 100%;
+        height: auto;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.12);
+        padding: 10px;
+      }
+
+      .hint {
         margin-top: 10px;
+        color: rgba(255, 179, 199, 0.8);
+        font-size: 12px;
       }
 
-      .meter > span {
-        display: block;
-        height: 100%;
-        width: 72%;
-        background: linear-gradient(90deg, var(--b), var(--a), var(--c));
-        box-shadow: 0 0 20px rgba(255, 42, 85, 0.55);
-      }
-
-      footer {
-        margin-top: 22px;
+      .tiny {
+        font-size: 12px;
         color: rgba(255, 179, 199, 0.75);
-        font-size: 13px;
+        margin-top: 12px;
+      }
+
+      a {
+        color: var(--c);
       }
     </style>
   </head>
   <body>
     <div class="wrap">
       <header>
-        <div class="brand">
+        <div>
           <div class="pill">
             <span class="dot"></span><span>Web-Smith</span>
           </div>
-          <h1>
-            Rotmodus. <span style="color: var(--c)">Blutrot</span> &amp; Kante.
-          </h1>
+          <h1>Hangman.</h1>
           <p class="sub">
-            Diverse Rottöne, dunkler Hintergrund, fette Akzente. Wenn du willst,
-            drehe ich das noch weiter Richtung "Vampir-Tech" oder "Dark Ruby".
+            Komplett überschrieben: ein kleines Hangman-Spiel im Blood-Red
+            Theme. Tastatur klicken oder einfach tippen.
           </p>
         </div>
-        <div class="card" style="min-width: 260px">
-          <p class="big">Status</p>
-          <div
-            style="
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              gap: 10px;
-            "
+        <div class="btnrow">
+          <button class="btn" id="btnNew">Neues Wort</button>
+          <button
+            class="btn"
+            id="btnReveal"
+            title="Zeigt das Wort, kostet aber das Ego."
           >
-            <span style="color: var(--muted)">Red intensity</span>
-            <strong>72%</strong>
-          </div>
-          <div class="meter"><span></span></div>
-          <div class="btnrow">
-            <a
-              class="btn"
-              href="#"
-              onclick="
-                togglePulse();
-                return false;
-              "
-              >Pulse</a
-            >
-            <a
-              class="btn"
-              href="#"
-              onclick="
-                toggleAsh();
-                return false;
-              "
-              >Asche</a
-            >
-          </div>
+            Reveal
+          </button>
+          <button class="btn" id="btnHard" title="Weniger Fehler erlaubt.">
+            Hard
+          </button>
         </div>
       </header>
 
       <section class="grid">
         <div class="card">
-          <p class="big">Was ist neu?</p>
-          <ul>
-            <li>Background-Glows in mehreren Rot-Schichten</li>
-            <li>Cards mit Glas-Effekt + Ruby-Outline</li>
-            <li>Akzente: Karmesin, Blutrot, Pink-Rosé</li>
-          </ul>
+          <div class="row">
+            <div>
+              <div class="label">Wort</div>
+              <div class="word" id="word"></div>
+            </div>
+          </div>
 
-          <div class="btnrow">
-            <a
-              class="btn"
-              href="https://github.com/Jan-Frederic/web-smith"
-              target="_blank"
-              rel="noreferrer"
-              >Repo</a
-            >
-            <a
-              class="btn"
-              href="https://github.com/Jan-Frederic/web-smith/issues"
-              target="_blank"
-              rel="noreferrer"
-              >Issues</a
-            >
+          <div class="meta">
+            <div class="pill2">
+              <div class="label">Fehler</div>
+              <div class="value" id="wrong">0</div>
+            </div>
+            <div class="pill2">
+              <div class="label">Übrig</div>
+              <div class="value" id="left">7</div>
+            </div>
+            <div class="pill2">
+              <div class="label">Versucht</div>
+              <div class="value" id="used">—</div>
+            </div>
+          </div>
+
+          <div class="msg" id="msg"></div>
+
+          <div class="kbd" id="kbd" aria-label="Buchstaben-Tastatur"></div>
+
+          <div class="tiny">
+            Tipp: Du kannst auch direkt auf der Tastatur drücken. Umlaute werden
+            normalisiert (Ä→A).
           </div>
         </div>
 
         <div class="card">
-          <p class="big">Mini-Spielerei</p>
-          <p class="sub" style="margin-top: 0">
-            Ein bisschen Bewegung — aber nicht nervig.
-          </p>
-          <div class="btnrow">
-            <a
-              class="btn"
-              href="#"
-              onclick="
-                shake();
-                return false;
-              "
-              >Shake</a
+          <div class="label">Der arme Strichmännchen-Account</div>
+          <svg
+            class="man"
+            viewBox="0 0 260 260"
+            role="img"
+            aria-label="Hangman Zeichnung"
+          >
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ff2a55" stop-opacity="0.9" />
+                <stop offset="1" stop-color="#b4002a" stop-opacity="0.9" />
+              </linearGradient>
+            </defs>
+
+            <!-- base -->
+            <path
+              d="M32 228 H228"
+              stroke="rgba(255,179,199,.55)"
+              stroke-width="6"
+              stroke-linecap="round"
+            />
+            <path
+              d="M70 228 V40 H160"
+              stroke="rgba(255,179,199,.40)"
+              stroke-width="6"
+              stroke-linecap="round"
+            />
+            <path
+              d="M160 40 V70"
+              stroke="rgba(255,179,199,.40)"
+              stroke-width="6"
+              stroke-linecap="round"
+            />
+
+            <!-- parts (shown step by step) -->
+            <g
+              id="parts"
+              stroke="url(#g)"
+              stroke-width="7"
+              stroke-linecap="round"
             >
-            <a
-              class="btn"
-              href="#"
-              onclick="
-                spray();
-                return false;
-              "
-              >Spray</a
-            >
-          </div>
+              <circle cx="160" cy="92" r="22" fill="none" data-step="1" />
+              <path d="M160 114 V170" fill="none" data-step="2" />
+              <path d="M160 132 L135 150" fill="none" data-step="3" />
+              <path d="M160 132 L185 150" fill="none" data-step="4" />
+              <path d="M160 170 L140 206" fill="none" data-step="5" />
+              <path d="M160 170 L180 206" fill="none" data-step="6" />
+              <!-- face -->
+              <g data-step="7">
+                <path d="M152 88 L158 94" fill="none" />
+                <path d="M158 88 L152 94" fill="none" />
+                <path d="M162 88 L168 94" fill="none" />
+                <path d="M168 88 L162 94" fill="none" />
+                <path d="M152 104 Q160 110 168 104" fill="none" />
+              </g>
+            </g>
+          </svg>
+          <div class="hint">Je nach Modus: Normal 7 Fehler, Hard 5 Fehler.</div>
         </div>
       </section>
-
-      <footer>
-        <span>© Web-Smith • Rot-Theme</span>
-      </footer>
     </div>
 
     <script>
-      let pulsing = false;
-      let ashy = false;
+      const WORDS = [
+        "BLUTROT",
+        "VAMPIR",
+        "RUBIN",
+        "KARMIN",
+        "SCHATTEN",
+        "NACHT",
+        "HACKER",
+        "GITHUB",
+        "JAVASCRIPT",
+        "CSS",
+        "BROWSER",
+        "WEBSITE",
+        "TICTACTOE",
+        "CHUCKNORRIS",
+        "SONNENBRILLE",
+      ];
 
-      function togglePulse() {
-        pulsing = !pulsing;
-        document.documentElement.style.setProperty(
-          "--shadow",
-          pulsing
-            ? "0 22px 85px rgba(255,42,85,.20)"
-            : "0 18px 60px rgba(0,0,0,.55)",
+      const elWord = document.getElementById("word");
+      const elWrong = document.getElementById("wrong");
+      const elLeft = document.getElementById("left");
+      const elUsed = document.getElementById("used");
+      const elMsg = document.getElementById("msg");
+      const elKbd = document.getElementById("kbd");
+      const parts = Array.from(document.querySelectorAll("#parts [data-step]"));
+
+      const btnNew = document.getElementById("btnNew");
+      const btnReveal = document.getElementById("btnReveal");
+      const btnHard = document.getElementById("btnHard");
+
+      let secret = "";
+      let guessed = new Set();
+      let wrong = 0;
+      let maxWrong = 7;
+      let done = false;
+
+      function pickWord() {
+        return WORDS[Math.floor(Math.random() * WORDS.length)];
+      }
+
+      function normalizeChar(ch) {
+        const up = ch.toUpperCase();
+        const map = {
+          Ä: "A",
+          Ö: "O",
+          Ü: "U",
+          ß: "SS",
+        };
+        return map[up] || up;
+      }
+
+      function isLetter(ch) {
+        return /^[A-Z]$/.test(ch);
+      }
+
+      function renderWord() {
+        elWord.innerHTML = "";
+        for (const raw of secret) {
+          const ch = normalizeChar(raw);
+          const span = document.createElement("span");
+          span.className = "slot";
+          span.textContent = guessed.has(ch) || !isLetter(ch) ? raw : "_";
+          elWord.appendChild(span);
+        }
+      }
+
+      function renderMeta() {
+        elWrong.textContent = String(wrong);
+        elLeft.textContent = String(Math.max(0, maxWrong - wrong));
+        const used = Array.from(guessed).sort().join(" ");
+        elUsed.textContent = used.length ? used : "—";
+      }
+
+      function renderMan() {
+        for (const p of parts) {
+          const step = Number(p.getAttribute("data-step"));
+          p.style.display = step <= wrong ? "" : "none";
+        }
+      }
+
+      function setMsg(text, kind = "") {
+        elMsg.className = "msg" + (kind ? ` ${kind}` : "");
+        elMsg.textContent = text;
+      }
+
+      function solved() {
+        for (const raw of secret) {
+          const ch = normalizeChar(raw);
+          if (isLetter(ch) && !guessed.has(ch)) return false;
+        }
+        return true;
+      }
+
+      function disableKeyboard(disabled) {
+        for (const btn of elKbd.querySelectorAll("button")) {
+          btn.disabled = disabled;
+        }
+      }
+
+      function guess(letter) {
+        if (done) return;
+        const L = normalizeChar(letter);
+        if (!isLetter(L)) return;
+        if (guessed.has(L)) {
+          setMsg(`Schon benutzt: ${L}`, "warn");
+          return;
+        }
+
+        guessed.add(L);
+
+        const hit = secret.split("").some((c) => normalizeChar(c) === L);
+        if (!hit) wrong++;
+
+        renderAll();
+
+        if (solved()) {
+          done = true;
+          disableKeyboard(true);
+          setMsg(`GG. Wort war: ${secret}`, "ok");
+          return;
+        }
+
+        if (wrong >= maxWrong) {
+          done = true;
+          disableKeyboard(true);
+          setMsg(`RIP. Wort war: ${secret}`, "bad");
+          return;
+        }
+
+        setMsg(hit ? `Treffer: ${L}` : `Nope: ${L}`, hit ? "ok" : "bad");
+      }
+
+      function buildKeyboard() {
+        elKbd.innerHTML = "";
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        for (const L of letters) {
+          const b = document.createElement("button");
+          b.className = "key";
+          b.textContent = L;
+          b.addEventListener("click", () => guess(L));
+          elKbd.appendChild(b);
+        }
+      }
+
+      function newGame() {
+        secret = pickWord();
+        guessed = new Set();
+        wrong = 0;
+        done = false;
+        buildKeyboard();
+        renderAll();
+        setMsg("Neues Spiel. Leg los.");
+      }
+
+      function renderAll() {
+        renderWord();
+        renderMeta();
+        renderMan();
+        btnHard.textContent = maxWrong === 5 ? "Hard: ON" : "Hard";
+      }
+
+      // Buttons
+      btnNew.addEventListener("click", () => newGame());
+      btnReveal.addEventListener("click", () => {
+        if (done) return;
+        done = true;
+        disableKeyboard(true);
+        setMsg(`Reveal: ${secret}`, "warn");
+      });
+      btnHard.addEventListener("click", () => {
+        maxWrong = maxWrong === 7 ? 5 : 7;
+        renderAll();
+        setMsg(
+          maxWrong === 5
+            ? "Hard Mode: nur 5 Fehler erlaubt. Viel Glück."
+            : "Normal Mode: 7 Fehler erlaubt.",
+          "warn",
         );
-        document.body.style.transition = "filter .25s ease";
-        document.body.style.filter = pulsing ? "saturate(1.15)" : "saturate(1)";
-      }
+      });
 
-      function toggleAsh() {
-        ashy = !ashy;
-        document.body.style.transition = "filter .25s ease";
-        document.body.style.filter = ashy
-          ? "grayscale(.15) contrast(1.05)"
-          : "none";
-      }
+      // Keyboard input
+      window.addEventListener("keydown", (e) => {
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+        const ch = e.key.length === 1 ? e.key : "";
+        const up = normalizeChar(ch);
+        if (up.length === 1 && isLetter(up)) {
+          e.preventDefault();
+          guess(up);
+        }
+      });
 
-      function shake() {
-        const el = document.querySelector(".wrap");
-        el.animate(
-          [
-            { transform: "translate3d(0,0,0)" },
-            { transform: "translate3d(-1px,1px,0)" },
-            { transform: "translate3d(2px,-1px,0)" },
-            { transform: "translate3d(-2px,-1px,0)" },
-            { transform: "translate3d(1px,2px,0)" },
-            { transform: "translate3d(0,0,0)" },
-          ],
-          { duration: 280, iterations: 1 },
-        );
-      }
-
-      function spray() {
-        const s = document.createElement("div");
-        const x = Math.round(20 + Math.random() * 60);
-        const y = Math.round(10 + Math.random() * 70);
-        const r = 180 + Math.random() * 420;
-        s.style.position = "fixed";
-        s.style.left = x + "vw";
-        s.style.top = y + "vh";
-        s.style.width = r + "px";
-        s.style.height = r + "px";
-        s.style.borderRadius = "999px";
-        s.style.pointerEvents = "none";
-        s.style.opacity = "0";
-        s.style.filter = "blur(10px)";
-        s.style.background =
-          "radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), rgba(255,42,85,.18), transparent 62%)";
-        document.body.appendChild(s);
-        s.animate(
-          [
-            { opacity: 0, transform: "scale(.85)" },
-            { opacity: 1, transform: "scale(1)" },
-            { opacity: 0, transform: "scale(1.08)" },
-          ],
-          { duration: 900, easing: "ease-out" },
-        ).onfinish = () => s.remove();
-      }
+      // Init
+      newGame();
     </script>
   </body>
 </html>
